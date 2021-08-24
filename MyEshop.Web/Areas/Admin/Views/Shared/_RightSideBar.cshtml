@@ -1,0 +1,101 @@
+﻿<div class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="sidebar-search">
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+                <!-- /input-group -->
+            </li>
+            <li>
+                <a href="/Admin"><i class="fa fa-dashboard fa-fw"></i> داشبورد</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-users fa-fw"></i> مدیریت کاربران<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="/Admin/ManageUsers">لیست کاربران</a>
+                    </li>
+                    <li>
+                        <a href="/Admin/ManageUsers/CreateUser">افزودن کاربر جدید</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            @*<li>
+                    <a href="#"><i class="fa fa-home fa-fw"></i> نقش ها و دسترسی ها</a>
+                </li>*@
+            <li>
+                <a href="#"><i class="fa fa-user fa-fw"></i>مدیریت محصولات<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="@Url.Action("Index","ManageProducts", new { area="Admin"})">لیست محصولات</a>
+                    </li>
+                    <li>
+                        <a href="#">تراکنش های مشتریان</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("CreateProduct","ManageProducts",new { area="Admin"})">افزودن محصول جدید</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("ProductGroups","ManageProducts",new { area="Admin"})">گروه محصولات</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("ProductFeatures","ManageProducts", new { area="Admin"})">لیست ویژگی ها</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("ProductBrands","ManageProducts", new { area="Admin"})">لیست برندها</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-user fa-fw"></i> مدیریت مقالات<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="#">لیست مقالات</a>
+                    </li>
+                    <li>
+                        <a href="#">افزودن مقاله جدید</a>
+                    </li>
+                    <li>
+                        <a href="#">گروه های مقالات</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-mail-reply-all fa-fw"></i> تماس با ما</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-user fa-fw"></i> مدیریت اسلایدر ها<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="flot.html">لیست اسلایدر ها</a>
+                    </li>
+                    <li>
+                        <a href="morris.html">افزودن اسلایدر جدید</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-gears fa-fw"></i> تنظیمات<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="flot.html">تنظیمات سایت</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+
+        </ul>
+        <!-- /#side-menu -->
+    </div>
+    <!-- /.sidebar-collapse -->
+</div>

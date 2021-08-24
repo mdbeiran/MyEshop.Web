@@ -1,0 +1,34 @@
+﻿@model MyEshop.ViewModel.UserPanelIndexViewModel
+
+@{
+    ViewBag.Title = "پنل کاربری";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 pull-left">
+                <h2>اطلاعات شخصی</h2>
+                <br />
+                <table class="table table-bordered">
+                    <tr>
+                        <td>نام کاربری</td>
+                        <td>ایمیل</td>
+                        <td>نقش</td>
+                    </tr>
+                    <tr>
+                        <td>@Model.User.UserName</td>
+                        <td>@Model.User.Email</td>
+                        <td>@Model.User.UserRole.RoleTitle</td>
+                    </tr>
+                </table>
+
+                <a href="/User/EditInformation" class="btn btn-warning">ویرایش اطلاعات</a>
+            </div>
+
+            @Html.Action("UserSidebar","Home", new { area="UserPanel"})
+        </div>
+    </div>
+</section>
+

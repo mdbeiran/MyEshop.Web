@@ -1,0 +1,108 @@
+﻿@model MyEshop.DomainClass.ProductGallery
+@using MyEshop.DomainClass
+@using MyEshop.Business
+
+@{
+    ViewBag.Title = "گالری تصاویر محصول";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 style="padding-top:10px;">گالری تصاویر محصول</h2>
+<hr />
+
+@if (ViewBag.ProductImageGalleryError == true)
+{
+    <div class="alert alert-danger">
+        لطفا فقط عکس وارد نمایید !
+    </div>
+}
+
+@if (ViewBag.ImageEmptyError == true)
+{
+    <div class="alert alert-danger">
+        لطفا عکس را وارد نمایید !
+    </div>
+}
+
+<div class="row">
+    @using (Html.BeginForm("CreateProductGallery", "ManageProducts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="col-md-4">
+            <h3 style="text-align:center;">افزودن تصویر</h3>
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(Model => Model.ProductId)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ImageTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ImageTitle, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ImageTitle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" name="productGallery" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="ثبت تصویر" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <h3 style="text-align:center;">لیست گالری تصاویر</h3>
+            @{
+
+                IEnumerable<ProductGallery> productGalleries = ViewBag.ProductGalleries;
+
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>تصویر</th>
+                        <th>عنوان تصویر</th>
+                        <th>دستورات</th>
+                    </tr>
+                    @foreach (ProductGallery gallery in productGalleries)
+                    {
+                        <tr>
+                            <td><img src="@PathTools.ProductImageGalleryThumbPath@gallery.ImageName" alt="" class="thumbnail" /></td>
+                            <td>@gallery.ImageTitle</td>
+                            <td>
+                                <a class="btn btn-danger" data-remodal-target="modal" onclick="DeleteProductGallery(@gallery.GalleryId)">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+
+            }
+        </div>
+
+    }
+</div>
+
+<div>
+    <a href="@Url.Action("Index","ManageProducts",new { area="Admin"})" class="btn btn-primary">بازگشت به لیست</a>
+</div>
+
+@* Remodal *@
+<div class="remodal" data-remodal-id="modal">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h1>احتیاط</h1>
+    <p>
+        آیا از عملیات مورد نظر اطمینان دارید؟
+    </p>
+    <br>
+    <button data-remodal-action="confirm" class="remodal-confirm">بله</button>
+    <button data-remodal-action="cancel" class="remodal-cancel">خیر</button>
+</div>

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MyEshop.DomainClass.ProductGroup>
+@using MyEshop.DomainClass
+
+<section class="border-radius category-side">
+    <header><h3> دسته بندی محصولات </h3></header>
+    <article>
+        <ul class="category-menu">
+            @foreach (ProductGroup mainGroup in Model.Where(g => !g.IsDelete))
+            {
+                <li>
+                    <h2><a href="#">@mainGroup.GroupTitle</a></h2>
+                    @if (mainGroup.ProductGroups.Any())
+                    {
+                        <ul class="child-category-menu">
+                            @foreach (ProductGroup subGroup in mainGroup.ProductGroups.Where(s => !s.IsDelete))
+                            {
+                                <li><h2><a href="#">@subGroup.GroupTitle</a> <span>(10)</span></h2></li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+        </ul>
+    </article>
+</section>

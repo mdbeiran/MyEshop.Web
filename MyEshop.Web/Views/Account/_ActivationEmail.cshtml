@@ -1,0 +1,10 @@
+﻿@model MyEshop.DomainClass.User
+@using System.Configuration
+
+<div style="direction:rtl; padding:20px;">
+    <h2>@Model.UserName عزیز !</h2>
+    <p>با تشکر از ثبت نام شما در سایت ما، لطفا جهت فعالسازی حساب کاربری خود روی لینک زیر کلیک نمایید .</p>
+    <p>
+        <a href="@ConfigurationManager.AppSettings["MyDomain"]/Account/ActivateUser/@Model.ActiveCode">لینک فعالسازی</a>
+    </p>
+</div>

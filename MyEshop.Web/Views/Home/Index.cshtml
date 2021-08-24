@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "صفحه اصلی";
+}
+
+@section Slider
+{
+    @Html.Action("ShowSlider")
+}
+
+@Html.Action("LastProducts", "Products", new { area = "" })
+

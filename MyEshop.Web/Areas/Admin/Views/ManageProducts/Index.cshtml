@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MyEshop.DomainClass.Product>
+
+@{
+    ViewBag.Title = "لیست محصولات";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 style="padding-top:10px;">لیست محصولات</h2>
+
+<p>
+    <a href="@Url.Action("CreateProduct","ManageProducts",new { area="Admin"})" class="btn btn-success">افزودن محصول</a>
+</p>
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductTitle)
+        </th>
+        <th>
+            گروه های محصول
+        </th>
+        <th>
+            موجودی
+        </th>
+        <th>
+            وضعیت
+        </th>
+        <th>دستورات</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductTitle)
+            </td>
+            <td>
+                @*@if (item.ProductSelectedGroups.Any())
+                    {
+                        <ul>
+                            @foreach (var group in item.ProductSelectedGroups)
+                            {
+                                <li>@group.ProductGroup.GroupTitle</li>
+                            }
+                        </ul>
+                    }*@
+            </td>
+            <td>
+                @((item.IsExist) ? "موجود" : "ناموجود")
+            </td>
+            <td>
+                @((item.IsActive) ? "فعال" : "غیر فعال")
+            </td>
+            <td>
+                <a href="@Url.Action("CreateProductFeature","ManageProducts", new { area="Admin", id=item.ProductId})" class="btn btn-default">ویژگی های محصول</a>
+                <a href="@Url.Action("CreateProductGallery","ManageProducts", new { area="Admin", id=item.ProductId})" class="btn btn-primary">گالری محصول</a>
+                <a href="@Url.Action("EditProduct","ManageProducts", new { area="Admin", id=item.ProductId})" class="btn btn-warning">
+                    <i class="glyphicon glyphicon-edit"></i>
+                </a>
+                @if (!item.IsDelete)
+                {
+                    <a href="#" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                }
+                else
+                {
+                    <a href="#" class="btn btn-success">
+                        <i class="glyphicon glyphicon-repeat"></i>
+                    </a>
+                }
+            </td>
+        </tr>
+    }
+
+</table>

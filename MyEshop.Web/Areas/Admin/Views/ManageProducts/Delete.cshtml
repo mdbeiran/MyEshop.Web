@@ -1,0 +1,57 @@
+﻿@model MyEshop.DomainClass.ProductGroup
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>آیا از حذف اطمینان دارید ؟</h3>
+<div>
+    <h4>ProductGroup</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupTitle)
+        </dd>
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.ParentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParentID)
+        </dd>
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.NameInUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameInUrl)
+        </dd>
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDelete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDelete)
+        </dd>
+        <hr />
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-danger" />
+            <a href="#" class="btn btn-primary">بازگشت به لیست</a>
+        </div>
+    }
+</div>

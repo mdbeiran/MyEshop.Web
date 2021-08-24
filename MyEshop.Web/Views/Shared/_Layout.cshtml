@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html class="no-js" dir="rtl" lang="fa-IR">
+<head>
+
+    @Html.Partial("_HeaderRefrences")
+
+    <!-- Basic Styles -->
+    @Html.Partial("_RefrenceStyles")
+
+</head>
+<body>
+    <script src="/Content/js/modernizr.js"></script>
+    <div class="top-nav">
+        <div class="container">
+            <div class="col-md-6 col-sm-7 col-xs-7 right-nav">
+
+                <!-- Clientarea and Basket -->
+                <div class="clientarea">
+                    <ul>
+                        @Html.Partial("_LoggedInUser")
+                        <li><a href=""><i class="fa fa-shopping-bag"></i> سبد خرید <span>10</span></a></li>
+                    </ul>
+                </div>
+                <!-- End Clientarea and Basket -->
+
+            </div>
+            <div class="col-md-6 col-sm-5 col-xs-5 left-nav">
+
+                <!-- Social -->
+                <div class="socials">
+                    <ul>
+                        <li><a href="" class="social-icon" data-balloon=" اینستاگرام " data-balloon-pos="down"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="" class="social-icon" data-balloon=" لینکداین " data-balloon-pos="down"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="" class="social-icon" data-balloon=" فیس بوک " data-balloon-pos="down"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="" class="social-icon" data-balloon=" تلگرام " data-balloon-pos="down"><i class="fa fa-paper-plane"></i></a></li>
+                        <li><a href="" class="social-icon" data-balloon=" توئیتر " data-balloon-pos="down"><i class="fa fa-twitter"></i></a></li>
+                    </ul>
+                </div>
+                <!-- End Social -->
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <!-- site Header -->
+    <header class="header-site">
+        <div class="container">
+            <div class="col-md-7 col-sm-7 logo-layer">
+                <a href="/" class="logo"><img src="~/Content/img/home/logo.png" style="width:100px;" /></a>
+                <h1>فروشگاه <span>آنلایــــــن</span> </h1>
+                <h2>شرکت ویژن ویرا فرتاک</h2>
+            </div>
+            <div class="col-md-5 col-sm-5 left-header-site">
+                <h5> پشتیبانــــی 24 ساعتـــــه </h5>
+                <h3> 09378767685 <i class="icon-phone"></i></h3>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </header>
+    <!-- End site Header -->
+    <!-- Mega Menu -->
+    @Html.Partial("_MegaMenu")
+    <!-- End Mega Menu -->
+    <!-- slider -->
+    @RenderSection("Slider", false)
+    <!-- End slider -->
+
+    <div class="container margin-top-25">
+        <aside class="col-md-3 col-sm-4 right-side-content">
+
+            <!-- Basket -->
+            <section class="border-radius basket-side">
+                <header><h3> سبد خرید شما  </h3></header>
+                <article>
+                    <ul>
+                        <li>
+                            <img class="border-radius" src="/Content/img/1.jpg">
+                            <div class="left-basket">
+                                <a href="">محصول شماره یک <span class="border-radius"> 2 </span></a>
+                            </div>
+                        </li>
+                        <li>
+                            <img class="border-radius" src="/Content/img/1.jpg">
+                            <div class="left-basket">
+                                <a href="">محصول شماره یک <span class="border-radius"> 2 </span></a>
+                            </div>
+                        </li>
+                        <li>
+                            <img class="border-radius" src="/Content/img/1.jpg">
+                            <div class="left-basket">
+                                <a href="">محصول شماره یک <span class="border-radius"> 2 </span></a>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="" class="show-basket-button border-radius">مشاهده سبد خرید</a>
+                </article>
+            </section>
+            <!-- End Basket -->
+            <!-- compare -->
+            <section class="border-radius compare-side">
+                <header><h3> لیست مقایسه </h3></header>
+                <article>
+                    <ul>
+                        <li>
+                            <i class="delete-compare">X</i>
+                            <a href="">محصول شماره یک </a>
+                        </li>
+                        <li>
+                            <i class="delete-compare">X</i>
+                            <a href="">محصول شماره یک </a>
+                        </li>
+                        <li>
+                            <i class="delete-compare">X</i>
+                            <a href="">محصول شماره یک </a>
+                        </li>
+                    </ul>
+                    <a href="" class="show-compare-list border-radius">مشاهده لیست مقایسه</a>
+                </article>
+            </section>
+            <!-- End compare -->
+            <!--Products Category -->
+            @Html.Action("ProductsCategory", "Products", new { area = ""})
+            <!-- End Products Category -->
+            <!-- Category -->
+            <!-- End Category -->
+        </aside>
+        <div class="col-md-9 col-sm-8 left-side-content">
+
+            @RenderBody()
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    @* Partial View Footer *@
+    @Html.Action("Footer", "Home", new { area = "" })
+    @* Partial View Footer *@
+
+    @Html.Partial("_FooterRefrences")
+
+</body>
+
+</html>

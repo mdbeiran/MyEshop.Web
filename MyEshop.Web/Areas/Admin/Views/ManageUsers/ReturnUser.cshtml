@@ -1,0 +1,61 @@
+﻿@model MyEshop.DomainClass.User
+@using MyEshop.Utility
+
+@{
+    ViewBag.Title = "بازگرداندن کاربر";
+}
+
+<h2 style="padding-top:10px;">بازگرداندن کاربر</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserRole.RoleTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserRole.RoleTitle)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegisterDate)
+        </dt>
+
+        <dd>
+            @Model.RegisterDate.ToStringShamsiDate()
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm("ReturnUser", "ManageUsers", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="بازگردانی" class="btn btn-danger" />
+            <a href="@Url.Action("Index")" class="btn btn-primary">بازگشت به لیست</a>
+        </div>
+    }
+</div>

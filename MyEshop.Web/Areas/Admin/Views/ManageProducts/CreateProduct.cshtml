@@ -1,0 +1,205 @@
+﻿@model MyEshop.ViewModel.CreateProductViewModel
+@using MyEshop.Business
+@using MyEshop.DomainClass
+
+@{
+    ViewBag.Title = "افزودن محصول";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 style="padding-top:10px;">افزودن محصول</h2>
+
+@if (ViewBag.SelectedGroupsError == true)
+{
+    <div class="alert alert-warning">
+        لطفا گروه محصول را انتخاب کنید !
+    </div>
+}
+
+@if (ViewBag.IsImageError == true)
+{
+    <div class="alert alert-warning">
+        لطفا فقط عکس وارد نمایید !
+    </div>
+}
+
+<div class="row">
+    @using (Html.BeginForm("CreateProduct", "ManageProducts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-8">
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BrandId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("BrandId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BrandId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ProductTitle, new { htmlAttributes = new { @class = "form-control", placeHolder = Html.DisplayNameFor(modle => modle.ProductTitle) } })
+                        @Html.ValidationMessageFor(model => model.ProductTitle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control", placeHolder = Html.DisplayNameFor(model => model.ShortDescription) } })
+                        @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductCount, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ProductCount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ProductCount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsExist, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsExist)
+                            @Html.ValidationMessageFor(model => model.IsExist, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="form-group col-md-3">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="colored-success" name="@nameof(Model.IsExist)" value="true" checked="checked">
+                                <span class="text" id="IsActiveSpan">@Html.DisplayNameFor(model => model.IsExist)</span>
+                            </label>
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsActive)
+                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    کلمات کلیدی را با " ، " از هم جدا کنید
+                </div>
+                <div class="form-group">
+                    <span class="control-label col-md-2">کلمات کلیدی</span>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="@nameof(Model.Tags)" value="@Model.Tags" data-role="tagsinput" id="Tags" placeholder="کلمات کلیدی را وارد نمایید" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="ثبت محصول" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">تصویر محصول</div>
+                <div class="panel-body">
+                    <img src="@(PathTools.NoPhoto)" alt="product image" class="thumbnail" id="ProductImage" />
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductImageName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="file" name="productImage" id="ProductImageInput" />
+                            @Html.ValidationMessageFor(model => model.ProductImageName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">انتخاب گروه ها</div>
+                <div class="panel-body">
+                    <ul>
+                        @foreach (ProductGroup mainGroup in Model.Groups.Where(g => g.ParentID == null))
+                        {
+                            <li>
+                                <input type="checkbox" name="@nameof(Model.SelectedGroups)" value="@mainGroup.GroupID" /> <span>@mainGroup.GroupTitle</span>
+                                @if (mainGroup.ProductGroups.Any())
+                                {
+                                    <ul>
+                                        @foreach (ProductGroup subGroup in mainGroup.ProductGroups.Where(s => !s.IsDelete))
+                                        {
+                                            <li>
+                                                <input type="checkbox" name="@nameof(Model.SelectedGroups)" value="@subGroup.GroupID" /> <span>@subGroup.GroupTitle</span>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+<div>
+    <a href="@Url.Action("Index","ManageProducts")" class="btn btn-primary">بازگشت به لیست</a>
+</div>
+
+
+@section Scripts{
+    <script src="~/Areas/Admin/Content/CustomJs/Product.js"></script>
+    <script src="~/Areas/Admin/Content/TagInput/bootstrap-tagsinput.js"></script>
+    <script src="~/Areas/Admin/Content/CustomJs/ResizeTextArea.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Upload/EditorUpload/ckeditor/ckeditor.js"></script>
+    <script src="~/Upload/EditorUpload/ckeditor/adapters/jquery.js"></script>
+    <script>
+        $(function () {
+            $('#Text').ckeditor();
+        });
+    </script>
+}
+
+@section Styles{
+    <link href="~/Areas/Admin/Content/TagInput/bootstrap-tagsinput.css" rel="stylesheet" />
+}

@@ -1,0 +1,67 @@
+﻿@model MyEshop.DomainClass.ProductGroup
+
+@{
+    ViewBag.Title = "ویرایش گروه";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 style="padding-top:10px;">@((Model.ParentID==null)?"ویرایش سر گروه":"ویرایش زیر گروه")</h2>
+
+@if (ViewBag.UrlError)
+{
+    <div class="alert alert-danger">
+        عنوان لینک (Url) از قبل وجود دارد !
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.GroupID)
+    @Html.HiddenFor(model => model.ParentID)
+    @Html.HiddenFor(model => model.IsDelete)
+
+    <input type="text" name="oldUrlName" value="@Model.NameInUrl" hidden />
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GroupTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.GroupTitle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.GroupTitle, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NameInUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.NameInUrl, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NameInUrl, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="ویرایش گروه" class="btn btn-warning" />
+        </div>
+    </div>
+</div>
+}
+
+@if (Model.ParentID == null)
+{
+    <div>
+        <a href="@Url.Action("ProductGroups","ManageProducts",new { area="Admin"})" class="btn btn-primary">بازگشت</a>
+    </div>
+}
+else
+{
+    <div>
+        <a href="@Url.Action("ProductGroups","ManageProducts",new { area="Admin", id = Model.ParentID})" class="btn btn-primary">بازگشت</a>
+    </div>
+}
+

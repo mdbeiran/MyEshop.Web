@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D5E9B709-2C70-466B-A4A1-64BEC97DE5AC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyEshop.DataLayer</RootNamespace>
+    <AssemblyName>MyEshop.DataLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Contexts\MyEshopDbContext.cs" />
+    <Compile Include="Migrations\202011050634515_Initial_DataBase.cs" />
+    <Compile Include="Migrations\202011050634515_Initial_DataBase.Designer.cs">
+      <DependentUpon>202011050634515_Initial_DataBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011201059143_mig-ChangeUser.cs" />
+    <Compile Include="Migrations\202011201059143_mig-ChangeUser.Designer.cs">
+      <DependentUpon>202011201059143_mig-ChangeUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011201101427_mig-ChangeUser-Second.cs" />
+    <Compile Include="Migrations\202011201101427_mig-ChangeUser-Second.Designer.cs">
+      <DependentUpon>202011201101427_mig-ChangeUser-Second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012021632167_mig-ProductModels.cs" />
+    <Compile Include="Migrations\202012021632167_mig-ProductModels.Designer.cs">
+      <DependentUpon>202012021632167_mig-ProductModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012230719380_mig-ProductModels-Second.cs" />
+    <Compile Include="Migrations\202012230719380_mig-ProductModels-Second.Designer.cs">
+      <DependentUpon>202012230719380_mig-ProductModels-Second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012230749346_mig-ChangeProduct.cs" />
+    <Compile Include="Migrations\202012230749346_mig-ChangeProduct.Designer.cs">
+      <DependentUpon>202012230749346_mig-ChangeProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012230754060_mig-ChangeProduct-Second.cs" />
+    <Compile Include="Migrations\202012230754060_mig-ChangeProduct-Second.Designer.cs">
+      <DependentUpon>202012230754060_mig-ChangeProduct-Second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012230756103_mig-ChangeProduct-Third.cs" />
+    <Compile Include="Migrations\202012230756103_mig-ChangeProduct-Third.Designer.cs">
+      <DependentUpon>202012230756103_mig-ChangeProduct-Third.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012230758394_mig-ChangeProductGroup.cs" />
+    <Compile Include="Migrations\202012230758394_mig-ChangeProductGroup.Designer.cs">
+      <DependentUpon>202012230758394_mig-ChangeProductGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012230801047_mig-ChangeProductGroup-Second.cs" />
+    <Compile Include="Migrations\202012230801047_mig-ChangeProductGroup-Second.Designer.cs">
+      <DependentUpon>202012230801047_mig-ChangeProductGroup-Second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012230803099_mig-ChangeProductSelectedGroup.cs" />
+    <Compile Include="Migrations\202012230803099_mig-ChangeProductSelectedGroup.Designer.cs">
+      <DependentUpon>202012230803099_mig-ChangeProductSelectedGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012240901274_mig-ChangeProductBrand.cs" />
+    <Compile Include="Migrations\202012240901274_mig-ChangeProductBrand.Designer.cs">
+      <DependentUpon>202012240901274_mig-ChangeProductBrand.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101130734290_mig-ChangeProductGallery.cs" />
+    <Compile Include="Migrations\202101130734290_mig-ChangeProductGallery.Designer.cs">
+      <DependentUpon>202101130734290_mig-ChangeProductGallery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101130915395_mig-ChangeProductGallery-Second.cs" />
+    <Compile Include="Migrations\202101130915395_mig-ChangeProductGallery-Second.Designer.cs">
+      <DependentUpon>202101130915395_mig-ChangeProductGallery-Second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101131520046_mig-ChangeProductGallery-Third.cs" />
+    <Compile Include="Migrations\202101131520046_mig-ChangeProductGallery-Third.Designer.cs">
+      <DependentUpon>202101131520046_mig-ChangeProductGallery-Third.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101131522592_mig-ChangeProductGallery-Forth.cs" />
+    <Compile Include="Migrations\202101131522592_mig-ChangeProductGallery-Forth.Designer.cs">
+      <DependentUpon>202101131522592_mig-ChangeProductGallery-Forth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101140832558_mig-ProductModels-Third.cs" />
+    <Compile Include="Migrations\202101140832558_mig-ProductModels-Third.Designer.cs">
+      <DependentUpon>202101140832558_mig-ProductModels-Third.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101140913456_mig-ChangeProductFeatures.cs" />
+    <Compile Include="Migrations\202101140913456_mig-ChangeProductFeatures.Designer.cs">
+      <DependentUpon>202101140913456_mig-ChangeProductFeatures.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyEshop.DomainClass\MyEshop.DomainClass.csproj">
+      <Project>{135e2434-df20-447f-b7b6-2532ad8c83d0}</Project>
+      <Name>MyEshop.DomainClass</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202011050634515_Initial_DataBase.resx">
+      <DependentUpon>202011050634515_Initial_DataBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011201059143_mig-ChangeUser.resx">
+      <DependentUpon>202011201059143_mig-ChangeUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011201101427_mig-ChangeUser-Second.resx">
+      <DependentUpon>202011201101427_mig-ChangeUser-Second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012021632167_mig-ProductModels.resx">
+      <DependentUpon>202012021632167_mig-ProductModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012230719380_mig-ProductModels-Second.resx">
+      <DependentUpon>202012230719380_mig-ProductModels-Second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012230749346_mig-ChangeProduct.resx">
+      <DependentUpon>202012230749346_mig-ChangeProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012230754060_mig-ChangeProduct-Second.resx">
+      <DependentUpon>202012230754060_mig-ChangeProduct-Second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012230756103_mig-ChangeProduct-Third.resx">
+      <DependentUpon>202012230756103_mig-ChangeProduct-Third.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012230758394_mig-ChangeProductGroup.resx">
+      <DependentUpon>202012230758394_mig-ChangeProductGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012230801047_mig-ChangeProductGroup-Second.resx">
+      <DependentUpon>202012230801047_mig-ChangeProductGroup-Second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012230803099_mig-ChangeProductSelectedGroup.resx">
+      <DependentUpon>202012230803099_mig-ChangeProductSelectedGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012240901274_mig-ChangeProductBrand.resx">
+      <DependentUpon>202012240901274_mig-ChangeProductBrand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101130734290_mig-ChangeProductGallery.resx">
+      <DependentUpon>202101130734290_mig-ChangeProductGallery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101130915395_mig-ChangeProductGallery-Second.resx">
+      <DependentUpon>202101130915395_mig-ChangeProductGallery-Second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101131520046_mig-ChangeProductGallery-Third.resx">
+      <DependentUpon>202101131520046_mig-ChangeProductGallery-Third.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101131522592_mig-ChangeProductGallery-Forth.resx">
+      <DependentUpon>202101131522592_mig-ChangeProductGallery-Forth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101140832558_mig-ProductModels-Third.resx">
+      <DependentUpon>202101140832558_mig-ProductModels-Third.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101140913456_mig-ChangeProductFeatures.resx">
+      <DependentUpon>202101140913456_mig-ChangeProductFeatures.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

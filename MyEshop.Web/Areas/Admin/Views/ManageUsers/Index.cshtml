@@ -1,0 +1,86 @@
+﻿@using MyEshop.Utility
+@model IEnumerable<MyEshop.DomainClass.User>
+
+@{
+    ViewBag.Title = "لیست کاربران";
+}
+
+<h2 style="padding-top:10px;">لیست کاربران</h2>
+
+<p>
+    <a href="/Admin/ManageUsers/CreateUser" class="btn btn-success">افزودن کاربر</a>
+</p>
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserRole.RoleTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegisterDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            دستورات
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserRole.RoleTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @*@item.RegisterDate.ToStringShamsiDate()*@
+                @item.RegisterDate.ToString("dddd, dd MMMM yyyy")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                <a href="/Admin/ManageUsers/EditUser/@item.UserId" class="btn btn-warning">
+                    <i class="glyphicon glyphicon-edit"></i>
+                </a>
+                @if (item.IsDelete)
+                {
+                    <a data-remodal-target="modal" onclick="ReturnUser(@item.UserId)" class="btn btn-success">
+                        <i class="glyphicon glyphicon-repeat"></i>
+                    </a>
+                }
+                else
+                {
+                    <a data-remodal-target="modal" onclick="DeleteUser(@item.UserId)" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+@* Remodal *@
+<div class="remodal" data-remodal-id="modal">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h1>احتیاط</h1>
+    <p>
+        آیا از عملیات مورد نظر اطمینان دارید؟
+    </p>
+    <br>
+    <button data-remodal-action="confirm" class="remodal-confirm">بله</button>
+    <button data-remodal-action="cancel" class="remodal-cancel">خیر</button>
+</div>

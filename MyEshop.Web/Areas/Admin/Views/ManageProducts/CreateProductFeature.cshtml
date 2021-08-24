@@ -1,0 +1,105 @@
+﻿@model MyEshop.DomainClass.ProductSelectedFeatures
+@using MyEshop.DomainClass
+
+@{
+    ViewBag.Title = "ویژگی های محصول";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 style="padding-top:10px;">ویژگی های محصول</h2>
+<hr />
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        <div class="col-md-4">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ProductId)
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <h3 style="text-align:center;">افزودن ویژگی</h3>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FeatureId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("FeatureId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FeatureId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="ثبت ویژگی" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <h3>لیست ویژگی ها</h3>
+            @{
+                IEnumerable<ProductSelectedFeatures> selectedFeatures = ViewBag.ProductSelectedFeatures;
+
+                <table class="table table-bordered table-hover table-striped">
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>مقدار</th>
+                        <th>دستورات</th>
+                    </tr>
+                    @foreach (ProductSelectedFeatures features in selectedFeatures)
+                    {
+                        <tr>
+                            <td>@features.ProductFeatures.FeatureTitle</td>
+                            <td>@features.Value</td>
+                            <td>
+                                <a class="btn btn-warning" href="@Url.Action("EditProductFeature","ManageProducts",new { area="Admin", id=features.PF_ID})">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                </a>
+
+                                @if (!features.IsDelete)
+                                {
+                                    <a class="btn btn-danger" data-remodal-target="modal" onclick="DeleteProductSelectedFeature(@features.PF_ID)">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-success" data-remodal-target="modal" onclick="ReturnProductSelectedFeature(@features.PF_ID)">
+                                        <i class="glyphicon glyphicon-repeat"></i>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    }
+
+</div>
+
+<div>
+    <a href="@Url.Action("Index","ManageProducts",new { area="Admin"})" class="btn btn-primary">بازگشت به لیست</a>
+</div>
+
+@* Remodal *@
+<div class="remodal" data-remodal-id="modal">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h1>احتیاط</h1>
+    <p>
+        آیا از عملیات مورد نظر اطمینان دارید؟
+    </p>
+    <br>
+    <button data-remodal-action="confirm" class="remodal-confirm">بله</button>
+    <button data-remodal-action="cancel" class="remodal-cancel">خیر</button>
+</div>

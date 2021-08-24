@@ -1,0 +1,101 @@
+﻿@using MyEshop.DomainClass
+@model IEnumerable<MyEshop.DomainClass.ProductGroup>
+
+@{
+    ViewBag.Title = "گروه های محصولات";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 style="padding-top:20px">@((ViewBag.parentId != null) ? "لیست زیر گروه ها" : "لیست سر گروه ها")</h2>
+
+<p>
+    <a href="@Url.Action("CreateGroup","ManageProducts",new { area="Admin", id=ViewBag.parentId})" class="btn btn-success">@((ViewBag.parentId == null) ? "افزودن سرگروه" : "افزودن زیر گروه")</a>
+    @if (ViewBag.parentId != null)
+    {
+        <a href="/Admin/ManageProducts/ProductGroups" class="btn btn-primary">بازگشت</a>
+    }
+</p>
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GroupTitle)
+        </th>
+        @if (ViewBag.parentId == null)
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.ParentID)
+            </th>
+        }
+        <th>
+            عنوان لینک گروه
+        </th>
+        <th>
+            وضعیت
+        </th>
+
+        <th>دستورات</th>
+    </tr>
+
+    @foreach (ProductGroup productGroup in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => productGroup.GroupTitle)
+            </td>
+            @if (ViewBag.parentId == null)
+            {
+                <td>
+                    @if (productGroup.ProductGroups.Any())
+                    {
+                        <ul>
+                            @foreach (ProductGroup subGroup in productGroup.ProductGroups.Where(s => !s.IsDelete))
+                            {
+                                <li>@subGroup.GroupTitle</li>
+                            }
+                        </ul>
+                    }
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => productGroup.NameInUrl)
+            </td>
+            <td>
+                @((productGroup.ParentID == null) ? "گروه اصلی" : "زیر گروه") @((productGroup.IsDelete) ? "- حذف شده" : "")
+            </td>
+            <td>
+                @if (ViewBag.parentId == null)
+                {
+                    <a href="@Url.Action("ProductGroups","ManageProducts",new { area="Admin", id=productGroup.GroupID})" class="btn btn-primary">افزودن زیر گروه</a>
+                }
+                <a href="@Url.Action("EditGroup","ManageProducts",new { id = productGroup.GroupID})" class="btn btn-warning">
+                    <i class="glyphicon glyphicon-edit"></i>
+                </a>
+                @if (!productGroup.IsDelete)
+                {
+                    <a data-remodal-target="modal" class="btn btn-danger" onclick="DeleteProductGroup(@productGroup.GroupID)">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                }
+                else
+                {
+                    <a data-remodal-target="modal" class="btn btn-success" onclick="ReturnProductGroup(@productGroup.GroupID)">
+                        <i class="glyphicon glyphicon-repeat"></i>
+                    </a>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+@* Remodal *@
+<div class="remodal" data-remodal-id="modal">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h1>احتیاط</h1>
+    <p>
+        آیا از عملیات مورد نظر اطمینان دارید؟
+    </p>
+    <br>
+    <button data-remodal-action="confirm" class="remodal-confirm">بله</button>
+    <button data-remodal-action="cancel" class="remodal-cancel">خیر</button>
+</div>

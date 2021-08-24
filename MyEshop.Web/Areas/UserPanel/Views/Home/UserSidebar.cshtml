@@ -1,0 +1,14 @@
+﻿@model MyEshop.DomainClass.User
+@using MyEshop.Business
+
+<div class="col-sm-3 pull-right">
+    <div>
+        <img src="@PathTools.UserAvatar" alt="" class="thumbnail" width="100px" />
+    </div>
+    <div style="padding-right:20px;">
+        @Model.UserName
+    </div>
+    <br />
+    <a href="/User/ChangePassword" class="btn btn-sm btn-warning">تغییر رمز</a> |
+    <a href="/SignOut" class="btn btn-sm btn-danger">خروج</a>
+</div>

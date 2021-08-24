@@ -1,0 +1,72 @@
+﻿@model IEnumerable<MyEshop.DomainClass.ProductFeatures>
+
+@{
+    ViewBag.Title = "لیست ویژگی ها";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 style="padding-top:10px;">لیست ویژگی ها</h2>
+
+<p>
+    <a href="@Url.Action("CreateFeature","ManageProducts",new { area="Admin"})" class="btn btn-success">افزودن ویژگی جدید</a>
+</p>
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.FeatureTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductGroup.GroupTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDelete)
+        </th>
+        <th>دستورات</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeatureTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductGroup.GroupTitle)
+            </td>
+            <td>
+                @((item.IsDelete) ? "حذف شده" : "فعال")
+            </td>
+            <td>
+                <a href="@Url.Action("EditFeature","ManageProducts", new { area="Admin", id=item.FeatureId})" class="btn btn-warning">
+                    <i class="glyphicon glyphicon-edit"></i>
+                </a>
+                @if (!item.IsDelete)
+                {
+                    <a data-remodal-target="modal" onclick="DeleteProductFeature(@item.FeatureId)" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                }
+                else
+                {
+                    <a data-remodal-target="modal" onclick="ReturnProductFeature(@item.FeatureId)" class="btn btn-success">
+                        <i class="glyphicon glyphicon-repeat"></i>
+                    </a>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+@* Remodal *@
+<div class="remodal" data-remodal-id="modal">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h1>احتیاط</h1>
+    <p>
+        آیا از عملیات مورد نظر اطمینان دارید؟
+    </p>
+    <br>
+    <button data-remodal-action="confirm" class="remodal-confirm">بله</button>
+    <button data-remodal-action="cancel" class="remodal-cancel">خیر</button>
+</div>
