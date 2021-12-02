@@ -1,0 +1,40 @@
+﻿@model IEnumerable<MyEshop.DomainClass.ProductComment>
+
+@if (Model.Any())
+{
+    foreach (var comment in Model.Where(c => c.ParentId == null))
+    {
+        <li>
+            <a href="" class="reply-button">پاسخ</a>
+
+            <img src="~/Images/DefaultImages/UserAvatarDefault.jpg" width="65">
+            <div>
+                <h5>ارسال شده از : @comment.User.FullName در تاریخ : @comment.CreateDate.ToString("dddd, dd MMMM yyyy") </h5>
+                <p>@comment.Comment</p>
+            </div>
+            <div class="clearfix"></div>
+            <ul>
+                @if (Model.Any(c => c.ParentId == comment.ProductCommentId))
+                {
+                    foreach (var replyComment in Model.Where(c => c.ParentId == comment.ProductCommentId))
+                    {
+                        <li>
+                            <img src="~/Images/DefaultImages/UserAvatarDefault.jpg" width="65">
+                            <div>
+                                <h5>ارسال شده از : @replyComment.User.FullName در تاریخ : @replyComment.CreateDate.ToString("dddd, dd MMMM yyyy") </h5>
+                                <p>@replyComment.Comment</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>
+                    }
+                }
+            </ul>
+        </li>
+    }
+}
+else
+{
+    <div class="alert alert-info">
+        <p> هنوز هیج نظری برای این محصول ثبت نشده است !</p>
+    </div>
+}

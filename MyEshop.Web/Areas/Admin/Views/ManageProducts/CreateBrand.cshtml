@@ -2,17 +2,16 @@
 
 @{
     ViewBag.Title = "افزودن برند";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2 style="padding-top:10px;">افزودن برند</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("CreateBrand", "ManageProducts", new { id = "form" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -31,6 +30,6 @@
     </div>
 }
 
-<div>
-    <a href="@Url.Action("ProductBrands","ManageProducts")" class="btn btn-primary">بازگشت به لیست</a>
-</div>
+<script>
+    $.validator.unobtrusive.parse("#form");
+</script>

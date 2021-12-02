@@ -96,6 +96,7 @@ namespace MyEshop.DomainClass
         public virtual ICollection<ProductTags> ProductTags { get; set; }
         public virtual ICollection<ProductSelectedGroup> ProductSelectedGroups { get; set; }
         public virtual ICollection<ProductSelectedFeatures> ProductSelectedFeatures { get; set; }
+        public virtual ICollection<ProductComment> ProductComments { get; set; }
 
         #endregion
     }

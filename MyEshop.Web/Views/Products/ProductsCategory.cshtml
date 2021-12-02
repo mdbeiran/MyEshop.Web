@@ -14,7 +14,7 @@
                         <ul class="child-category-menu">
                             @foreach (ProductGroup subGroup in mainGroup.ProductGroups.Where(s => !s.IsDelete))
                             {
-                                <li><h2><a href="#">@subGroup.GroupTitle</a> <span>(10)</span></h2></li>
+                                <li><h2><a href="#">@subGroup.GroupTitle</a> <span>(@mainGroup.ProductGroups.Count())</span></h2></li>
                             }
                         </ul>
                     }

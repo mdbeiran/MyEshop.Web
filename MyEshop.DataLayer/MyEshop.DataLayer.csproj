@@ -37,9 +37,30 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -121,6 +142,22 @@
     <Compile Include="Migrations\202101140913456_mig-ChangeProductFeatures.Designer.cs">
       <DependentUpon>202101140913456_mig-ChangeProductFeatures.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111281415573_mig-AddWebsiteToUserProfile.cs" />
+    <Compile Include="Migrations\202111281415573_mig-AddWebsiteToUserProfile.Designer.cs">
+      <DependentUpon>202111281415573_mig-AddWebsiteToUserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111281434428_mig-AddProductCommentToDb.cs" />
+    <Compile Include="Migrations\202111281434428_mig-AddProductCommentToDb.Designer.cs">
+      <DependentUpon>202111281434428_mig-AddProductCommentToDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111290626102_mig-DeleteRelationBetweenUserAndUserProfile.cs" />
+    <Compile Include="Migrations\202111290626102_mig-DeleteRelationBetweenUserAndUserProfile.Designer.cs">
+      <DependentUpon>202111290626102_mig-DeleteRelationBetweenUserAndUserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111290631439_mig-AddSomePropertyToUser.cs" />
+    <Compile Include="Migrations\202111290631439_mig-AddSomePropertyToUser.Designer.cs">
+      <DependentUpon>202111290631439_mig-AddSomePropertyToUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -188,6 +225,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101140913456_mig-ChangeProductFeatures.resx">
       <DependentUpon>202101140913456_mig-ChangeProductFeatures.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111281415573_mig-AddWebsiteToUserProfile.resx">
+      <DependentUpon>202111281415573_mig-AddWebsiteToUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111281434428_mig-AddProductCommentToDb.resx">
+      <DependentUpon>202111281434428_mig-AddProductCommentToDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111290626102_mig-DeleteRelationBetweenUserAndUserProfile.resx">
+      <DependentUpon>202111290626102_mig-DeleteRelationBetweenUserAndUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111290631439_mig-AddSomePropertyToUser.resx">
+      <DependentUpon>202111290631439_mig-AddSomePropertyToUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

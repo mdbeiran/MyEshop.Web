@@ -1,6 +1,7 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
     @*<li><a href="#"><i class="fa fa-user"></i> <label>@User.Identity.Name خوش آمدید !</label> </a></li>*@
+    <li><a href="/Admin"><i class="fa fa-tasks"></i> <label>پنل مدیریت</label> </a></li>
     <li><a href="/User"><i class="fa fa-user"></i> <label>پنل کاربری</label> </a></li>
     <li><a href="/SignOut"><i class="fa fa-sign-out"></i> <label>خروج</label> </a></li>
 }

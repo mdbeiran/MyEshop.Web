@@ -21,7 +21,7 @@ namespace MyEshop.DomainClass
 
         #region Properties
 
-        [Key, ForeignKey("User")]
+        [Key/*, ForeignKey("User")*/]
         public int UserId { get; set; }
 
 
@@ -77,13 +77,17 @@ namespace MyEshop.DomainClass
         public string UserImageName { get; set; }
 
 
+        [Display(Name ="وب سایت")]
+        [MaxLength(300, ErrorMessage = "تعداد کاراکتر های {0} نمیتواند بیشتر از {1} باشد !")]
+        public string Website { get; set; }
+
         public bool IsDelete { get; set; }
 
         #endregion
 
         #region Relations
 
-        public virtual User User { get; set; }
+        
 
         #endregion
 

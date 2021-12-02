@@ -9,7 +9,7 @@
 <h2 style="padding-top:20px">@((ViewBag.parentId != null) ? "لیست زیر گروه ها" : "لیست سر گروه ها")</h2>
 
 <p>
-    <a href="@Url.Action("CreateGroup","ManageProducts",new { area="Admin", id=ViewBag.parentId})" class="btn btn-success">@((ViewBag.parentId == null) ? "افزودن سرگروه" : "افزودن زیر گروه")</a>
+    <a href="@Url.Action("CreateGroup","ManageProducts",new { area="Admin", id=ViewBag.parentId})" onclick="btnCreate()" class="btn btn-success">@((ViewBag.parentId == null) ? "افزودن سرگروه" : "افزودن زیر گروه")</a>
     @if (ViewBag.parentId != null)
     {
         <a href="/Admin/ManageProducts/ProductGroups" class="btn btn-primary">بازگشت</a>
@@ -88,6 +88,23 @@
 
 </table>
 
+ @*Modal 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalHeader">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>*@
+
 @* Remodal *@
 <div class="remodal" data-remodal-id="modal">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -99,3 +116,11 @@
     <button data-remodal-action="confirm" class="remodal-confirm">بله</button>
     <button data-remodal-action="cancel" class="remodal-cancel">خیر</button>
 </div>
+
+@*@section Scripts{
+    <script>
+        function btnCreate() {
+            $.get("/Admin/ManageProducs/CreateGroup")
+        }
+    </script>
+}*@

@@ -394,20 +394,23 @@ namespace MyEshop.Web.Areas.Admin.Controllers
 
                 #region Edit Image
 
-                if (productImage != null && productImage.IsImage())
+                if (productImage != null)
                 {
-                    string imageName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(productImage.FileName);
-                    AddImageToServer(productImage, imageName, PathTools.ProductImageFullPath, 200, 200, PathTools.ProductImageThumbFullPath, editProduct.ProductImageName);
-                    editProduct.ProductImageName = imageName;
 
-                }
-                else
-                {
-                    EditProductViewModel returnEditProduct = _db.ProductRepository.GetProductForEdit(editProduct.ProductId);
-                    returnEditProduct.ShortDescription = FixedText.ConvertBrToNewLine(editProduct.ShortDescription);
-                    ViewBag.BrandId = new SelectList(_db.ProductRepository.GetActiveProductBrands(), "BrandId", "BrandTitle", editProduct.BrandId);
-                    ViewBag.IsImageError = true;
-                    return View(returnEditProduct);
+                    if (productImage.IsImage())
+                    {
+                        string imageName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(productImage.FileName);
+                        AddImageToServer(productImage, imageName, PathTools.ProductImageFullPath, 200, 200, PathTools.ProductImageThumbFullPath, editProduct.ProductImageName);
+                        editProduct.ProductImageName = imageName;
+                    }
+                    else
+                    {
+                        EditProductViewModel returnEditProduct = _db.ProductRepository.GetProductForEdit(editProduct.ProductId);
+                        returnEditProduct.ShortDescription = FixedText.ConvertBrToNewLine(editProduct.ShortDescription);
+                        ViewBag.BrandId = new SelectList(_db.ProductRepository.GetActiveProductBrands(), "BrandId", "BrandTitle", editProduct.BrandId);
+                        ViewBag.IsImageError = true;
+                        return View(returnEditProduct);
+                    }
                 }
 
                 #endregion
@@ -453,6 +456,38 @@ namespace MyEshop.Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Delete Product
+
+        public ActionResult DeleteProduct(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _db.ProductRepository.DeleteProduct(id);
+            _db.Save();
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+        }
+
+        #endregion
+
+        #region Return Product
+
+        public ActionResult ReturnProduct(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _db.ProductRepository.ReturnProduct(id);
+            _db.Save();
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+        }
+
+        #endregion
+
         #endregion
 
         #region Product Brands
@@ -472,7 +507,7 @@ namespace MyEshop.Web.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult CreateBrand()
         {
-            return View();
+            return PartialView();
         }
 
 

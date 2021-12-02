@@ -95,5 +95,12 @@ namespace MyEshop.Services
         void UpdateProductSelectedFeature(ProductSelectedFeatures feature);
 
         #endregion
+
+        #region Product Comments
+
+        void InsertComment(ProductComment comment);
+        IEnumerable<ProductComment> GetProductCommentsByProductId(int productId);
+
+        #endregion
     }
 }

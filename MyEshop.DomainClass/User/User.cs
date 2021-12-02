@@ -43,6 +43,22 @@ namespace MyEshop.DomainClass
         public string Email { get; set; }
 
 
+        [Display(Name = "نام و نام خانوادگی")]
+        [MaxLength(250, ErrorMessage = "تعداد کاراکتر های {0} نمیتواند بیشتر از {1} باشد !")]
+        public string FullName { get; set; }
+
+
+        [Display(Name = "تصویر")]
+        [MaxLength(200)]
+        public string UserImageName { get; set; }
+
+
+        [Display(Name = "وب سایت")]
+        [MaxLength(300, ErrorMessage = "تعداد کاراکتر های {0} نمیتواند بیشتر از {1} باشد !")]
+        [Url(ErrorMessage ="نشانی اینترنتی مورد نظر معتبر نمی باشد !")]
+        public string Website { get; set; }
+
+
         [Display(Name = "کلمه عبور")]
         [Required(ErrorMessage = "لطفا {0} را وارد نمایید !")]
         [MaxLength(200, ErrorMessage = "تعداد کاراکتر های {0} نمیتواند بیشتر از {1} باشد !")]
@@ -70,7 +86,7 @@ namespace MyEshop.DomainClass
         #region Relations
 
         public virtual UserRole UserRole { get; set; }
-        public virtual UserProfile Profile { get; set; }
+        public virtual ICollection<ProductComment> ProductComments { get; set; }
 
         #endregion
 

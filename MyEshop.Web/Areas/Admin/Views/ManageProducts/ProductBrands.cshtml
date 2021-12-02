@@ -8,7 +8,7 @@
 <h2 style="padding-top:10px;">لیست برندها</h2>
 
 <p>
-    <a href="@Url.Action("CreateBrand","ManageProducts")" class="btn btn-success">افزودن برند جدید</a>
+    <a onclick="btnCreate()" class="btn btn-success">افزودن برند جدید</a>
 </p>
 <table class="table table-bordered table-hover table-striped">
     <tr>
@@ -46,6 +46,21 @@
 
 </table>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="myModalHeader">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body" id="myModalBody">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
 @* Remodal *@
 <div class="remodal" data-remodal-id="modal">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -57,3 +72,17 @@
     <button data-remodal-action="confirm" class="remodal-confirm">بله</button>
     <button data-remodal-action="cancel" class="remodal-cancel">خیر</button>
 </div>
+
+@section Scripts{
+    <script>
+        function btnCreate() {
+            $.get("/Admin/ManageProducts/CreateBrand",
+                function result() {
+                    $("#myModal").modal();
+                    $("#myModalLabel").html("افزودن برند");
+                    /*$("#myModalHeader");*/
+                    $("#myModalBody").html(result);
+                });
+        }
+    </script>
+}

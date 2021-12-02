@@ -39,6 +39,7 @@ namespace MyEshop.DataLayer
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductFeatures> ProductFeatures { get; set; }
         public DbSet<ProductSelectedFeatures> ProductSelectedFeatures { get; set; }
+        public DbSet<ProductComment> ProductComments { get; set; }
 
         #endregion
 

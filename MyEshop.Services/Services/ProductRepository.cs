@@ -105,7 +105,7 @@ namespace MyEshop.Services
                 Text = currentProduct.Text,
                 Groups = groups.ToList(),
                 SelectedGroups = selectedGroups.Select(g => g.ProductGroupId).ToList(),
-                Tags = string.Join("، ",currentProduct.ProductTags.Select(t=>t.TagTitle).ToList())
+                Tags = string.Join("، ", currentProduct.ProductTags.Select(t => t.TagTitle).ToList())
             };
 
             return returnProduct;
@@ -135,7 +135,7 @@ namespace MyEshop.Services
 
         public IEnumerable<Product> LastProducts()
         {
-            return _context.Products.OrderByDescending(p => p.ProductId).Where(p=>!p.IsDelete).Take(6);
+            return _context.Products.OrderByDescending(p => p.ProductId).Where(p => !p.IsDelete).Take(6);
         }
 
         #endregion
@@ -273,7 +273,7 @@ namespace MyEshop.Services
         {
             _context.ProductFeatures.Add(features);
         }
-        
+
         public void UpdateFeature(ProductFeatures features)
         {
             _context.Entry(features).State = EntityState.Modified;
@@ -320,7 +320,19 @@ namespace MyEshop.Services
 
         #endregion
 
+        #region Product Comments
 
+        public void InsertComment(ProductComment comment)
+        {
+            _context.ProductComments.Add(comment);
+        }
+
+        public IEnumerable<ProductComment> GetProductCommentsByProductId(int productId)
+        {
+            return _context.ProductComments.Where(c => c.ProductId == productId && c.IsDelete == false);
+        }
+
+        #endregion
 
         #region Dispose
 
@@ -330,6 +342,10 @@ namespace MyEshop.Services
         }
 
         
+
+
+
+
 
 
 

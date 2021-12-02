@@ -116,6 +116,30 @@ function ReturnProductSelectedFeature(id) {
     });
 }
 
+
+function DeleteProduct(id) {
+    $(document).on('confirmation', '.remodal', function () {
+        $.get("/Admin/ManageProducts/DeleteProduct/" + id, function (res) {
+            //if (statusText === "success") {
+            //    location.reload();
+            //}
+            location.reload();
+        });
+    });
+}
+
+function ReturnProduct(id) {
+    $(document).on('confirmation', '.remodal', function () {
+        $.get("/Admin/ManageProducts/ReturnProduct/" + id, function (res) {
+            //if (statusText === "success") {
+            //    location.reload();
+            //}
+            location.reload();
+        });
+    });
+}
+
+
 // پیش نمایش عکس محصول قبل از اپلود روی سرور
 $("#ProductImageInput").change(function () {
     if (this.files && this.files[0]) {

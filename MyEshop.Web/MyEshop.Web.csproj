@@ -176,6 +176,7 @@
     <Content Include="Content\js\wow.js" />
     <Content Include="Content\img\home\logo.png" />
     <Content Include="Images\DefaultImages\no-photo.png" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Upload\EditorUpload\ckeditor\adapters\jquery.js" />
     <Content Include="Upload\EditorUpload\ckeditor\build-config.js" />
     <Content Include="Upload\EditorUpload\ckeditor\CHANGES.html" />
@@ -1452,6 +1453,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MoreLinq\MoreEnumerable.DistinctBy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1517,6 +1519,10 @@
     <Content Include="Upload\EditorUpload\ckeditor\_samples\adobeair\run.sh" />
     <Content Include="Upload\EditorUpload\ckeditor\_samples\assets\output_for_flash.fla" />
     <Content Include="Views\Products\LastProducts.cshtml" />
+    <Content Include="Views\Shared\_Product.cshtml" />
+    <Content Include="Views\Products\ShowProduct.cshtml" />
+    <Content Include="Views\Products\ShowComments.cshtml" />
+    <Content Include="Views\Products\CreateComment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
