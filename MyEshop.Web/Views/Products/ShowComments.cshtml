@@ -5,7 +5,7 @@
     foreach (var comment in Model.Where(c => c.ParentId == null))
     {
         <li>
-            <a href="" class="reply-button">پاسخ</a>
+            <a onclick="replyComment(@comment.ProductCommentId)" href="#usersComments" class="reply-button">پاسخ</a>
 
             <img src="~/Images/DefaultImages/UserAvatarDefault.jpg" width="65">
             <div>

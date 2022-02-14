@@ -1,0 +1,42 @@
+﻿@model IEnumerable<MyEshop.DomainClass.Product>
+@using MyEshop.Business
+
+@{
+    ViewBag.Title = "ShowProducts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li><a href="/">خانه</a></li>
+    <li><a style="color:blue;" href="#"> فروشگاه </a></li>
+</ol>
+
+<section class="last-products archive-products">
+    @if (ViewBag.SearchQuery != null)
+    {
+        <div class="alert alert-info">
+            <h3>تعداد <span style="color:red;">"@Model.Count()"</span> محصول با عبارت <span style="color:red;">"@ViewBag.SearchQuery"</span> یافت شد !</h3>
+        </div>
+    }
+    <article>
+        @foreach (var product in Model)
+        {
+            @Html.Partial("_Product", product)
+        }
+
+        <div class="clearfix"></div>
+    </article>
+</section>
+
+<div class="pagination-layer">
+    <ul class="pagination">
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+    </ul>
+</div>
+
+
+

@@ -50,7 +50,7 @@ namespace MyEshop.Web.Controllers
 
         #endregion
 
-        #region Show Product
+        #region Show Details Product
 
         [Route("ShowProduct/{id}")]
         public ActionResult ShowProduct(int id)
@@ -99,6 +99,7 @@ namespace MyEshop.Web.Controllers
             {
                 ProductId = id
             };
+            
 
             return PartialView(productComment);
         }
@@ -106,20 +107,55 @@ namespace MyEshop.Web.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateComment(ProductComment comment)
+        public ActionResult CreateComment(ProductComment productComment)
         {
             if (ModelState.IsValid)
             {
-                comment.CreateDate = DateTime.Now;
-                comment.UserId = UserManager.GetCurrentUserId();
-                _db.ProductRepository.InsertComment(comment);
+                productComment.CreateDate = DateTime.Now;
+                productComment.UserId = UserManager.GetCurrentUserId();
+                _db.ProductRepository.InsertComment(productComment);
                 _db.Save();
 
-                var ProductComments = _db.ProductRepository.GetProductCommentsByProductId(comment.ProductId).ToList();
+                IEnumerable<ProductComment> ProductComments = _db.ProductRepository.GetProductCommentsByProductId(productComment.ProductId).ToList();
                 return PartialView("ShowComments", ProductComments);
             }
 
-            return PartialView(comment);
+            return PartialView(productComment);
+        }
+
+        #endregion
+
+        #region Show Products
+
+        [Route("Shop")]
+        public ActionResult ShowProducts(string searchQuery = "")
+        {
+            if (searchQuery != "")
+            {
+                var filteredProducts = _db.ProductRepository.GetFilteredProducts(searchQuery).ToList();
+                var filteredProductsByTag = _db.ProductRepository.GetProductsByTagTitle(searchQuery).ToList();
+                filteredProducts.AddRange(filteredProductsByTag);
+
+                ViewBag.SearchQuery = searchQuery;  
+                return View(filteredProducts.Distinct());
+            }
+
+            IEnumerable<Product> products = _db.ProductRepository.GetProducts();
+            return View(products);
+
+        }
+
+        #endregion
+
+        #region Products Archive
+
+        [Route("Archive")]
+        public ActionResult ArchiveProducts()
+        {
+            IEnumerable<Product> products = _db.ProductRepository.GetProducts().ToList();
+            ViewBag.ProductGroups = _db.ProductRepository.GetActiveGroups().ToList();
+
+            return View(products);
         }
 
         #endregion

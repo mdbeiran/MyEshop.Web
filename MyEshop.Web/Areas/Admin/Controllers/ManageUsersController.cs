@@ -13,6 +13,7 @@ namespace MyEshop.Web.Areas.Admin.Controllers
     using MyEshop.DomainClass;
     using MyEshop.Services;
     using MyEshop.Utility;
+    using MyEshop.ViewModel.User;
 
     public class ManageUsersController : Controller
     {
@@ -35,9 +36,13 @@ namespace MyEshop.Web.Areas.Admin.Controllers
         #region Users List
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(FilterUsersViewModel filter)
         {
-            return View(_db.UserRepository.GetUsers().ToList());
+            //return View(_db.UserRepository.GetUsers().ToList());
+            filter.Take = 15;
+            FilterUsersViewModel filterUsers = _db.UserRepository.GetUsersByFilter(filter);
+
+            return View(filterUsers);
         }
 
         #endregion

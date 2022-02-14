@@ -68,7 +68,7 @@
 
     <div class="container margin-top-25">
         <aside class="col-md-3 col-sm-4 right-side-content">
-
+            @RenderSection("Filters", false)
             <!-- Basket -->
             <section class="border-radius basket-side">
                 <header><h3> سبد خرید شما  </h3></header>
@@ -120,7 +120,7 @@
             </section>
             <!-- End compare -->
             <!--Products Category -->
-            @Html.Action("ProductsCategory", "Products", new { area = ""})
+            @Html.Action("ProductsCategory", "Products", new { area = "" })
             <!-- End Products Category -->
             <!-- Category -->
             <!-- End Category -->
@@ -138,6 +138,8 @@
     @* Partial View Footer *@
 
     @Html.Partial("_FooterRefrences")
+
+    @RenderSection("Scripts", false)
 
 </body>
 

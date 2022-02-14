@@ -1,84 +1,123 @@
-﻿@model IEnumerable<MyEshop.DomainClass.Product>
+﻿@model MyEshop.ViewModel.Products.FilterProductsViewModel
 
 @{
     ViewBag.Title = "لیست محصولات";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 style="padding-top:10px;">لیست محصولات</h2>
-
-<p>
-    <a href="@Url.Action("CreateProduct","ManageProducts",new { area="Admin"})" class="btn btn-success">افزودن محصول</a>
-</p>
-<table class="table table-bordered table-hover table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductTitle)
-        </th>
-        <th>
-            گروه های محصول
-        </th>
-        <th>
-            موجودی
-        </th>
-        <th>
-            وضعیت
-        </th>
-        <th>دستورات</th>
-    </tr>
-
-    @foreach (var item in Model)
+<div class="row">
+    @using (Html.BeginForm("Index", "ManageProducts", FormMethod.Get, new { id = "filter-search" }))
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductTitle)
-            </td>
-            <td>
-                @*@if (item.ProductSelectedGroups.Any())
-                    {
-                        <ul>
-                            @foreach (var group in item.ProductSelectedGroups)
-                            {
-                                <li>@group.ProductGroup.GroupTitle</li>
-                            }
-                        </ul>
-                    }*@
-            </td>
-            <td>
-                @((item.IsExist) ? "موجود" : "ناموجود")
-            </td>
-            <td>
-                @((item.IsActive) ? "فعال" : "غیر فعال")
-            </td>
-            <td>
-                <a href="@Url.Action("CreateProductFeature","ManageProducts", new { area="Admin", id=item.ProductId})" class="btn btn-default">ویژگی های محصول</a>
-                <a href="@Url.Action("CreateProductGallery","ManageProducts", new { area="Admin", id=item.ProductId})" class="btn btn-primary">گالری محصول</a>
-                <a href="@Url.Action("EditProduct","ManageProducts", new { area="Admin", id=item.ProductId})" class="btn btn-warning">
-                    <i class="glyphicon glyphicon-edit"></i>
-                </a>
-                @if (!item.IsDelete)
-                {
-                    <a data-remodal-target="modal" class="btn btn-danger" onclick="DeleteProduct(@item.ProductId)">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </a>
-                }
-                else
-                {
-                    <a data-remodal-target="modal" class="btn btn-success" onclick="ReturnProduct(@item.ProductId)">
-                        <i class="glyphicon glyphicon-repeat"></i>
-                    </a>
-                }
-            </td>
-        </tr>
-    }
+        <div class="col-md-4">
+            <input hidden type="number" name="@nameof(Model.PageId)" id="pageId" value="@Model.PageId" />
 
-</table>
+            <h2>فیلتر جست و جو</h2>
+            <hr />
+            <h3>وضعیت محصول</h3>
+
+            <div>
+                <label>
+                    <input name="@nameof(Model.State)" type="radio" @((Model.State == "All" ? "checked" : "")) value="All">
+                    <span class="text">همه</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input name="@nameof(Model.State)" type="radio" @((Model.State == "Active" ? "checked" : "")) value="Active">
+                    <span class="text">فعال</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input name="@nameof(Model.State)" type="radio" @((Model.State == "NotActive" ? "checked" : "")) value="NotActive">
+                    <span class="text">غیر فعال</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input name="@nameof(Model.State)" type="radio" @((Model.State == "Deleted" ? "checked" : "")) value="Deleted">
+                    <span class="text">حذف شده</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input name="@nameof(Model.State)" type="radio" @((Model.State == "IsExist" ? "checked" : "")) value="IsExist">
+                    <span class="text">موجود</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input name="@nameof(Model.State)" type="radio" @((Model.State == "NotExist" ? "checked" : "")) value="NotExist">
+                    <span class="text">ناموجود</span>
+                </label>
+            </div>
+
+            <hr />
+            <h3>براساس :</h3>
+            <div class="form-group col-md-12">
+                <input type="text" class="form-control" name="@nameof(Model.ProductCode)" placeholder="کد محصول" value="@Model.ProductCode">
+            </div>
+            <div class="form-group col-md-12">
+                <input type="text" class="form-control" name="@nameof(Model.Title)" placeholder="عنوان محصول" value="@Model.Title">
+            </div>
+            <div class="form-group col-md-12">
+                <input type="text" class="form-control" id="fromDate" name="@nameof(Model.FromDate)" placeholder="از تاریخ" value="@((Model.FromDate != null) ? Model.FromDate.Value.ToString("yyyy/MM/dd") : "")">
+            </div>
+            <div class="form-group col-md-12">
+                <input type="text" class="form-control" id="toDate" name="@nameof(Model.ToDate)" placeholder="تا تاریخ" value="@((Model.ToDate != null) ? Model.ToDate.Value.ToString("yyyy/MM/dd") : "")">
+            </div>
+            <div class="form-group col-md-12">
+                <input type="submit" class="btn btn-primary btn-block" value="جستجو" />
+            </div>
+            <div class="form-group col-md-12">
+                <a href="@Url.Action("CreateProduct","ManageProducts",new { area="Admin"})" class="btn btn-success btn-block">افزودن محصول</a>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <h2 style="padding-top:10px;">لیست محصولات</h2>
+            <div id="ListProducts">
+                <table class="table table-bordered table-hover table-striped">
+                    <tr>
+                        <th>
+                            شناسه محصول
+                        </th>
+                        <th>
+                            عنوان محصول
+                        </th>
+                        <th>
+                            گروه های محصول
+                        </th>
+                        <th>
+                            موجودی
+                        </th>
+                        <th>
+                            وضعیت
+                        </th>
+                        <th>دستورات</th>
+                    </tr>
+
+                    @foreach (var product in Model.Products)
+                    {
+                        @Html.Partial("ShowProducts", product)
+                    }
+                </table>
+            </div>
+
+            <br />
+            <div>
+                <ul class="pagination">
+                    @for (int i = 1; i <= Model.PageCount; i++)
+                    {
+                        <li class="@((i == Model.ActivePage) ? "active" : "")">
+                            <a style="cursor:pointer;" onclick="FillPageId(@i)"> @i</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+</div>
 
 @* Remodal *@
 <div class="remodal" data-remodal-id="modal">
@@ -91,3 +130,23 @@
     <button data-remodal-action="confirm" class="remodal-confirm">بله</button>
     <button data-remodal-action="cancel" class="remodal-cancel">خیر</button>
 </div>
+
+@section Scripts{
+    @* Persian DatePicker *@
+    <link href="http://cdn.kendostatic.com/2013.2.918/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/2013.2.918/styles/kendo.default.min.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="~/Areas/Admin/Content/js/kendo.all.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            // create DatePicker from input HTML element
+            $("#fromDate").kendoDatePicker();
+            $("#toDate").kendoDatePicker();
+        });
+    </script>
+
+    @*<link href="~/Areas/Admin/Content/Percian-Calender/style/kamadatepicker.min.css" rel="stylesheet" />
+        <script src="~/Areas/Admin/Content/Percian-Calender/src/kamadatepicker.min.js"></script>*@
+}

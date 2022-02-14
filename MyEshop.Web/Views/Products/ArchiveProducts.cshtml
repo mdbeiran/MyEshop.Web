@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MyEshop.DomainClass.Product>
+@using MyEshop.DomainClass
+
+@{
+    ViewBag.Title = "آرشیو محصولات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Filters{
+    <section class="border-radius basket-side">
+        <header><h3> فیلتر محصولات  </h3></header>
+        <article class="filter">
+            <form>
+                <p>عنوان محصول</p>
+                <p>
+                    <input type="text" name="productTitle" class="form-control" />
+                </p>
+                <p>حداقل قیمت</p>
+                <p>
+                    <input type="number" name="minPrice" class="form-control" />
+                </p>
+                <p>حداکثر قیمت</p>
+                <p>
+                    <input type="number" name="maxPrice" class="form-control" />
+                </p>
+                <p>گروه ها</p>
+                <p>
+                    @{
+                        var Groups = ViewBag.ProductGroups as IEnumerable<ProductGroup>;
+                    }
+                    <ul>
+                        @foreach (var mainGroup in Groups.Where(g => g.ParentID == null))
+                        {
+                            <li>
+                                <input type="checkbox" name="selectedGroups" value="@mainGroup.GroupID" />
+                                <span>@mainGroup.GroupTitle</span>
+                                @if (Groups.Any(g => g.ParentID == mainGroup.GroupID))
+                                {
+                                    <ul>
+                                        @foreach (var subGroup in Groups.Where(g => g.ParentID == mainGroup.GroupID))
+                                        {
+                                            <li>
+                                                <input type="checkbox" name="selectedGroups" value="@subGroup.GroupID" />
+                                                <span>@subGroup.GroupTitle</span>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </p>
+
+
+                <input type="submit" class="btn btn-success form-control" value="فیلتر" />
+            </form>
+        </article>
+    </section>
+}
+

@@ -1,15 +1,16 @@
 ﻿@model MyEshop.DomainClass.ProductComment
-
 @using (Ajax.BeginForm("CreateComment", "Products", FormMethod.Post, new AjaxOptions()
-    {
-        OnSuccess = "SuccessComment",
-        UpdateTargetId = "listComment"
-    }))
-@*@using (Html.BeginForm("CreateComment", "Products", FormMethod.Post))*@
+{
+    OnSuccess = "SuccessComment",
+    UpdateTargetId = "listComment"
+}))
 {
     @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
     @Html.HiddenFor(model => model.ProductId)
     @Html.HiddenFor(model => model.ParentId)
+
 
     <div class="col-md-12">
         @Html.TextAreaFor(model => model.Comment, new { @class = "form-control", placeholder = "متن دیدگاه" })

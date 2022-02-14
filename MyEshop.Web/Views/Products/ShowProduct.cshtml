@@ -47,7 +47,7 @@
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#main-content"> توضیحات کامل </a></li>
             <li><a data-toggle="tab" href="#properties"> ویژگی ها </a></li>
-            <li><a data-toggle="tab" href="#comments"> نظرات کاربران </a></li>
+            <li id="usersComments"><a data-toggle="tab" href="#comments"> نظرات کاربران </a></li>
         </ul>
 
         <div class="tab-content ">
@@ -83,32 +83,33 @@
                     else
                     {
                         <div class="alert alert-warning">
-                            <p>برای ثبت نظر ابتدا باید <a href="/Login">وارد سایت</a> شوید</p>
+                            <p>برای ثبت نظر ابتدا باید <a style="color:blue;" href="/Login">وارد سایت</a> شوید</p>
                         </div>
                     }
                     <ul class="comment-list" id="listComment">
                         @Html.Action("ShowComments", new { id = Model.ProductId })
                     </ul>
                 </div>
-
             </div>
             <!-- End Comment -->
-
-
-
         </div>
     </div>
-
     <section class="border-radius tags-layer">
         @foreach (var tag in Model.ProductTags)
         {
-            <a href="">@tag.TagTitle </a>
+            <a href="/Shop?searchQuery=@tag.TagTitle">@tag.TagTitle </a>
         }
     </section>
 </div>
 
-<script>
-    function SuccessComment() {
-        $("#Comment").val("");
-    }
-</script>
+@section Scripts{
+    <script src="~/Content/CustomJs/Custom.js"></script>
+    <script src="~/Content/CustomJs/smooth-scroll.js"></script>
+    <script>
+        // All animations will take exactly 500ms
+        var scroll = new SmoothScroll('a[href*="#"]', {
+            speed: 1000,
+            speedAsDuration: true
+        });
+    </script>
+}

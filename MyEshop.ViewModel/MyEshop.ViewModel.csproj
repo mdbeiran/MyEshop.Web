@@ -65,10 +65,12 @@
   <ItemGroup>
     <Compile Include="Products\CreateProductViewModel.cs" />
     <Compile Include="Products\EditProductViewModel.cs" />
+    <Compile Include="Products\FilterProductsViewModel.cs" />
     <Compile Include="Products\ProductGroupViewModel.cs" />
     <Compile Include="Products\ShowProductFeatureViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\ChangePasswordViewModel.cs" />
+    <Compile Include="User\FilterUsersViewModel.cs" />
     <Compile Include="User\ForgotPasswordViewModel.cs" />
     <Compile Include="User\LoginViewModel.cs" />
     <Compile Include="User\RegisterViewModel.cs" />

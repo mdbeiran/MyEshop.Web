@@ -10,6 +10,7 @@ namespace MyEshop.Services
 
     using MyEshop.DomainClass;
     using MyEshop.ViewModel;
+    using MyEshop.ViewModel.User;
 
     public interface IUserRepository:IDisposable
     {
@@ -28,6 +29,7 @@ namespace MyEshop.Services
         User GetUserByUserName(string userName);
         void ReturnUser(int userId);
         User GetUserForEditByUserId(int userId);
+        FilterUsersViewModel GetUsersByFilter(FilterUsersViewModel filter);
 
         #endregion
 
@@ -56,5 +58,9 @@ namespace MyEshop.Services
 
         #endregion
 
+    }
+
+    internal class filterusersviewmodel
+    {
     }
 }

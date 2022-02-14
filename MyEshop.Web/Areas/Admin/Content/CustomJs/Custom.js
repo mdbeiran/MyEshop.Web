@@ -150,3 +150,10 @@ $("#ProductImageInput").change(function () {
         reader.readAsDataURL(this.files[0]);
     }
 });
+
+
+// رفتن به صفحه بعد
+function FillPageId(id) {
+    $("#pageId").val(id);
+    $("#filter-search").submit();
+}

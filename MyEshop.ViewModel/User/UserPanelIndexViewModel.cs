@@ -11,6 +11,6 @@ namespace MyEshop.ViewModel
 
     public class UserPanelIndexViewModel
     {
-        public User User { get; set; }
+        public MyEshop.DomainClass.User User { get; set; }
     }
 }

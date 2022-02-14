@@ -17,6 +17,7 @@ namespace MyEshop.Web.Areas.Admin.Controllers
     using MyEshop.ViewModel;
     using MyEshop.Utility;
     using MyEshop.Business;
+    using MyEshop.ViewModel.Products;
 
     public class ManageProductsController : Controller
     {
@@ -199,10 +200,12 @@ namespace MyEshop.Web.Areas.Admin.Controllers
 
         #region Index
 
-        public ActionResult Index()
+        public ActionResult Index(FilterProductsViewModel filter)
         {
-            IEnumerable<Product> products = _db.ProductRepository.GetProducts().ToList();
-            return View(products);
+            filter.Take = 15;
+            FilterProductsViewModel filterProducts = _db.ProductRepository.GetProductsByFilter(filter);
+
+            return View(filterProducts);
         }
 
         #endregion
@@ -488,6 +491,15 @@ namespace MyEshop.Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Show Produtcts
+
+        public ActionResult ShowProducts()
+        {
+            return PartialView();
+        }
+
+        #endregion
+
         #endregion
 
         #region Product Brands
@@ -551,7 +563,7 @@ namespace MyEshop.Web.Areas.Admin.Controllers
             }
 
             ViewBag.brandError = false;
-            return View(productBrand);
+            return PartialView(productBrand);
         }
 
 

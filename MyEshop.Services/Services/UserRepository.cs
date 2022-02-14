@@ -11,6 +11,8 @@ namespace MyEshop.Services
     using MyEshop.DomainClass;
     using MyEshop.DataLayer;
     using MyEshop.ViewModel;
+    using MyEshop.ViewModel.User;
+    using System.Globalization;
 
     public class UserRepository : IUserRepository
     {
@@ -105,6 +107,98 @@ namespace MyEshop.Services
             return currentUser;
         }
 
+        public FilterUsersViewModel GetUsersByFilter(FilterUsersViewModel filter)
+        {
+            int take = filter.Take;
+            int skip = (filter.PageId - 1) * take;
+
+            FilterUsersViewModel data = new FilterUsersViewModel();
+            IQueryable<User> users = _context.Users;
+
+            #region State
+
+            switch (filter.State)
+            {
+                case "All":
+                    {
+                        break;
+                    }
+                case "Active":
+                    {
+                        users = users.Where(u => u.IsActive && !u.IsDelete);
+                        break;
+                    }
+                case "NotActive":
+                    {
+                        users = users.Where(u => !u.IsActive && !u.IsDelete);
+                        break;
+                    }
+                case "Deleted":
+                    {
+                        users = users.Where(u => u.IsDelete);
+                        break;
+                    }
+            }
+
+            data.State = filter.State;
+
+            #endregion
+
+            #region Impelementing Filters
+
+            if (!string.IsNullOrEmpty(filter.UserName))
+            {
+                users = users.Where(u => u.UserName.Trim().ToLower().Contains(filter.UserName.Trim().ToLower()));
+                data.UserName = filter.UserName;
+            }
+
+            if (!string.IsNullOrEmpty(filter.Email))
+            {
+                users = users.Where(u => u.Email.Trim().ToLower().Contains(filter.Email.Trim().ToLower()));
+                data.Email = filter.Email;
+            }
+
+            if (filter.FromeDate != null)
+            {
+                DateTime fromDate = new DateTime(filter.FromeDate.Value.Year, filter.FromeDate.Value.Month, filter.FromeDate.Value.Day, new PersianCalendar());
+                users = users.Where(u => u.RegisterDate >= fromDate);
+                data.FromeDate = filter.FromeDate;
+            }
+
+            if (filter.ToDate != null)
+            {
+                DateTime toDate = new DateTime(filter.ToDate.Value.Year, filter.ToDate.Value.Month, filter.ToDate.Value.Day, new PersianCalendar());
+                users = users.Where(u => u.RegisterDate <= toDate);
+                data.ToDate = filter.ToDate;
+            }
+
+            #endregion
+
+            #region Pagging
+
+            int thisPageCount = users.Count();
+            if (thisPageCount % take > 0)
+            {
+                data.PageCount = (thisPageCount / take) + 1;
+            }
+            else
+            {
+                data.PageCount = thisPageCount / take;
+            }
+
+            data.ActivePage = filter.PageId;
+            data.StartPage = filter.PageId - 3;
+            data.EndPage = data.ActivePage + 3;
+            if (data.StartPage <= 0) data.StartPage = 1;
+            if (data.EndPage > data.PageCount) data.EndPage = data.PageCount;
+
+            #endregion
+
+            data.Users = users.OrderByDescending(u => u.RegisterDate).Skip(skip).Take(take).AsNoTracking().ToList();
+
+            return data;
+        }
+
         #endregion
 
         #region UserRole
@@ -157,6 +251,8 @@ namespace MyEshop.Services
         }
 
         
+
+
 
 
 

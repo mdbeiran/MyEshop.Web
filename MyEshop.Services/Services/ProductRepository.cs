@@ -12,6 +12,8 @@ namespace MyEshop.Services
     using MyEshop.DomainClass;
     using MyEshop.DataLayer;
     using MyEshop.ViewModel;
+    using MyEshop.ViewModel.Products;
+    using System.Globalization;
 
     public class ProductRepository : IProductRepository
     {
@@ -130,12 +132,123 @@ namespace MyEshop.Services
 
         public IEnumerable<Product> GetProducts()
         {
-            return _context.Products;
+            return _context.Products.Where(p => p.IsActive && !p.IsDelete).OrderByDescending(p => p.ProductId);
         }
 
         public IEnumerable<Product> LastProducts()
         {
             return _context.Products.OrderByDescending(p => p.ProductId).Where(p => !p.IsDelete).Take(6);
+        }
+
+        public IEnumerable<Product> GetFilteredProducts(string searchQuery)
+        {
+            return _context.Products.Where(p => p.IsActive && !p.IsDelete && p.ProductTitle.Contains(searchQuery) || p.ShortDescription.Contains(searchQuery) || p.Text.Contains(searchQuery)).OrderByDescending(p => p.ProductId).Distinct();
+        }
+
+        public IEnumerable<Product> GetProductsByTagTitle(string tagTitle)
+        {
+            return _context.ProductTags.Where(t => t.TagTitle == tagTitle).Select(t => t.Product).Distinct();
+        }
+
+        public FilterProductsViewModel GetProductsByFilter(FilterProductsViewModel filter)
+        {
+            int take = filter.Take;
+            int skip = (filter.PageId - 1) * take;
+
+            FilterProductsViewModel data = new FilterProductsViewModel();
+            IQueryable<Product> query = _context.Products;
+
+            #region State
+
+            switch (filter.State)
+            {
+                case "All":
+                    {
+                        break;
+                    }
+                case "Active":
+                    {
+                        query = query.Where(p => p.IsActive && p.IsDelete == false);
+                        break;
+                    }
+                case "NotActive":
+                    {
+                        query = query.Where(p => p.IsActive == false && p.IsDelete == false);
+                        break;
+                    }
+                case "Deleted":
+                    {
+                        query = query.Where(p => p.IsDelete);
+                        break;
+                    }
+                case "IsExist":
+                    {
+                        query = query.Where(p => p.IsExist && !p.IsDelete);
+                        break;
+                    }
+                case "NotExist":
+                    {
+                        query = query.Where(p => !p.IsExist && !p.IsDelete);
+                        break;
+                    }
+            }
+
+            #endregion
+
+            #region Impelementing Filters
+
+            if (filter.ProductCode != null && filter.ProductCode != 0)
+            {
+                query = query.Where(p => p.ProductCode == filter.ProductCode);
+                data.ProductCode = filter.ProductCode;
+            }
+
+            if (!string.IsNullOrEmpty(filter.Title))
+            {
+                query = query.Where(p => p.ProductTitle.Trim().ToLower().Contains(filter.Title.Trim().ToLower()));
+                data.Title = filter.Title;
+            }
+
+            if (filter.FromDate != null)
+            {
+                DateTime fromDate = new DateTime(filter.FromDate.Value.Year, filter.FromDate.Value.Month, filter.FromDate.Value.Day, new PersianCalendar());
+                query = query.Where(p => p.CreateDate >= fromDate);
+                data.FromDate = filter.FromDate;
+            }
+
+            if (filter.ToDate != null)
+            {
+                DateTime toDate = new DateTime(filter.ToDate.Value.Year, filter.ToDate.Value.Month, filter.ToDate.Value.Day, new PersianCalendar());
+                query = query.Where(p => p.CreateDate <= toDate);
+                data.ToDate = filter.ToDate;
+            }
+
+            #endregion
+
+            #region Pagging
+
+            int thisPageCount = query.Count();
+            if (thisPageCount % take > 0)
+            {
+                data.PageCount = (thisPageCount / take) + 1;
+            }
+            else
+            {
+                data.PageCount = thisPageCount / take;
+            }
+
+            data.ActivePage = filter.PageId;
+            data.StartPage = filter.PageId - 3;
+            data.EndPage = data.ActivePage + 3;
+            if (data.StartPage <= 0) data.StartPage = 1;
+            if (data.EndPage > data.PageCount) data.EndPage = data.PageCount;
+
+            #endregion
+
+            data.State = filter.State;
+            data.Products = query.OrderByDescending(p => p.CreateDate).Skip(skip).Take(take).AsNoTracking().ToList();
+
+            return data;
         }
 
         #endregion
@@ -340,63 +453,6 @@ namespace MyEshop.Services
         {
             _context.Dispose();
         }
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

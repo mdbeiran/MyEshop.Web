@@ -1,77 +1,154 @@
 ﻿@using MyEshop.Utility
-@model IEnumerable<MyEshop.DomainClass.User>
+@model MyEshop.ViewModel.User.FilterUsersViewModel
 
 @{
     ViewBag.Title = "لیست کاربران";
 }
 
-<h2 style="padding-top:10px;">لیست کاربران</h2>
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Index", "ManageUsers", FormMethod.Get, new { @id = "filter-search" }))
+        {
+            <input hidden type="number" name="@nameof(Model.PageId)" id="pageId" value="@Model.PageId" />
 
-<p>
-    <a href="/Admin/ManageUsers/CreateUser" class="btn btn-success">افزودن کاربر</a>
-</p>
-<table class="table table-bordered table-hover table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserRole.RoleTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegisterDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            دستورات
-        </th>
-    </tr>
+            <h2>فیلتر جست و جو</h2>
+            <hr />
+            <h3>وضعیت محصول</h3>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserRole.RoleTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @*@item.RegisterDate.ToStringShamsiDate()*@
-                @item.RegisterDate.ToString("dddd, dd MMMM yyyy")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                <a href="/Admin/ManageUsers/EditUser/@item.UserId" class="btn btn-warning">
-                    <i class="glyphicon glyphicon-edit"></i>
-                </a>
-                @if (item.IsDelete)
+            <div>
+                <label>
+                    <input name="@nameof(Model.State)" type="radio" @((Model.State == "All" ? "checked" : "")) value="All">
+                    <span class="text">همه</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input name="@nameof(Model.State)" type="radio" @((Model.State == "Active" ? "checked" : "")) value="Active">
+                    <span class="text">فعال</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input name="@nameof(Model.State)" type="radio" @((Model.State == "NotActive" ? "checked" : "")) value="NotActive">
+                    <span class="text">غیر فعال</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input name="@nameof(Model.State)" type="radio" @((Model.State == "Deleted" ? "checked" : "")) value="Deleted">
+                    <span class="text">حذف شده</span>
+                </label>
+            </div>
+            <hr />
+
+            <h3>براساس :</h3>
+            <div class="form-group col-md-12">
+                <input type="text" class="form-control" name="@nameof(Model.UserName)" placeholder="نام کاربری" value="@Model.UserName">
+            </div>
+            <div class="form-group col-md-12">
+                <input type="text" class="form-control" name="@nameof(Model.Email)" placeholder="ایمیل" value="@Model.Email">
+            </div>
+            <div class="form-group col-md-12">
+                <input type="text" class="form-control" id="fromeDate" name="@nameof(Model.FromeDate)" placeholder="از تاریخ" value="@((Model.FromeDate != null) ? Model.FromeDate.Value.ToString("yyyy/MM/dd") : "")">
+            </div>
+            <div class="form-group col-md-12">
+                <input type="text" class="form-control" id="toDate" name="@nameof(Model.ToDate)" placeholder="تا تاریخ" value="@((Model.ToDate != null) ? Model.ToDate.Value.ToString("yyyy/MM/dd") : "")">
+            </div>
+            <div class="form-group col-md-12">
+                <input type="submit" class="btn btn-primary btn-block" value="جستجو" />
+            </div>
+            <div class="form-group col-md-12">
+                <a href="/Admin/ManageUsers/CreateUser" class="btn btn-success btn-block">افزودن کاربر</a>
+            </div>
+        }
+    </div>
+    <div class="col-md-8">
+        <h2 style="padding-top:10px;">لیست کاربران</h2>
+
+        @if (Model.Users.Any())
+        {
+            <table class="table table-bordered table-hover table-striped">
+                <tr>
+                    <th>
+                        نام کاربری
+                    </th>
+                    <th>
+                        عنوان نقش
+                    </th>
+                    <th>
+                        ایمیل
+                    </th>
+                    <th>
+                        تاریخ ثبت نام
+                    </th>
+                    <th>
+                        وضعیت
+                    </th>
+                    <th>
+                        دستورات
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.Users)
                 {
-                    <a data-remodal-target="modal" onclick="ReturnUser(@item.UserId)" class="btn btn-success">
-                        <i class="glyphicon glyphicon-repeat"></i>
-                    </a>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserRole.RoleTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @*@item.RegisterDate.ToStringShamsiDate()*@
+                            @item.RegisterDate.ToString("dddd, dd MMMM yyyy")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsActive)
+                        </td>
+                        <td>
+                            <a href="/Admin/ManageUsers/EditUser/@item.UserId" class="btn btn-warning">
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </a>
+                            @if (item.IsDelete)
+                            {
+                                <a data-remodal-target="modal" onclick="ReturnUser(@item.UserId)" class="btn btn-success">
+                                    <i class="glyphicon glyphicon-repeat"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a data-remodal-target="modal" onclick="DeleteUser(@item.UserId)" class="btn btn-danger">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
                 }
-                else
-                {
-                    <a data-remodal-target="modal" onclick="DeleteUser(@item.UserId)" class="btn btn-danger">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </a>
-                }
-            </td>
-        </tr>
-    }
+            </table>
 
-</table>
+            <br />
+            <div>
+                <ul class="pagination">
+                    @for (int i = 1; i <= Model.PageCount; i++)
+                    {
+                        <li class="@((i == Model.ActivePage) ? "active" : "")">
+                            <a style="cursor:pointer;" onclick="FillPageId(@i)"> @i</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-12 alert alert-info">
+                <p>کاربری وجود ندارد</p>
+            </div>
+        }
+    </div>
+</div>
 
 @* Remodal *@
 <div class="remodal" data-remodal-id="modal">
@@ -84,3 +161,23 @@
     <button data-remodal-action="confirm" class="remodal-confirm">بله</button>
     <button data-remodal-action="cancel" class="remodal-cancel">خیر</button>
 </div>
+
+@section Scripts{
+    @* Persian DatePicker *@
+    <link href="http://cdn.kendostatic.com/2013.2.918/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/2013.2.918/styles/kendo.default.min.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="~/Areas/Admin/Content/js/kendo.all.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            // create DatePicker from input HTML element
+            $("#fromeDate").kendoDatePicker();
+            $("#toDate").kendoDatePicker();
+        });
+    </script>
+
+    @*<link href="~/Areas/Admin/Content/Percian-Calender/style/kamadatepicker.min.css" rel="stylesheet" />
+        <script src="~/Areas/Admin/Content/Percian-Calender/src/kamadatepicker.min.js"></script>*@
+}

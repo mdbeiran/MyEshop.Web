@@ -9,6 +9,7 @@ namespace MyEshop.Services
 
     using MyEshop.DomainClass;
     using MyEshop.ViewModel;
+    using MyEshop.ViewModel.Products;
 
     public interface IProductRepository : IDisposable
     {
@@ -36,6 +37,8 @@ namespace MyEshop.Services
         Product GetProductById(int productId);
         IEnumerable<Product> GetProducts();
         IEnumerable<Product> LastProducts();
+        IEnumerable<Product> GetFilteredProducts(string searchQuery);
+        FilterProductsViewModel GetProductsByFilter(FilterProductsViewModel filter);
 
         #endregion
 
@@ -65,6 +68,7 @@ namespace MyEshop.Services
         void InsertProductTags(int productId, string tagTitle);
         IEnumerable<ProductTags> GetProductTagsById(int productId);
         void DeleteProductTags(int productId);
+        IEnumerable<Product> GetProductsByTagTitle(string tagTitle);
 
         #endregion
 

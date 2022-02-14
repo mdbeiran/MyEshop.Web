@@ -129,6 +129,7 @@
     <Content Include="Areas\Admin\Content\js\demo\flot-demo.js" />
     <Content Include="Areas\Admin\Content\js\demo\morris-demo.js" />
     <Content Include="Areas\Admin\Content\js\jquery-1.10.2.js" />
+    <Content Include="Areas\Admin\Content\js\kendo.all.min.js" />
     <Content Include="Areas\Admin\Content\js\plugins\dataTables\dataTables.bootstrap.js" />
     <Content Include="Areas\Admin\Content\js\plugins\dataTables\jquery.dataTables.js" />
     <Content Include="Areas\Admin\Content\js\plugins\flot\excanvas.min.js" />
@@ -144,6 +145,12 @@
     <Content Include="Areas\Admin\Content\Modal\remodal.css" />
     <Content Include="Areas\Admin\Content\Modal\remodal.js" />
     <Content Include="Areas\Admin\Content\Modal\remodal.min.js" />
+    <Content Include="Areas\Admin\Content\Percian-Calender\src\kamadatepicker.js" />
+    <Content Include="Areas\Admin\Content\Percian-Calender\src\kamadatepicker.min.js" />
+    <Content Include="Areas\Admin\Content\Percian-Calender\src\PageKamaDatePicker.js" />
+    <Content Include="Areas\Admin\Content\Percian-Calender\src\Walletkamadatepicker.js" />
+    <Content Include="Areas\Admin\Content\Percian-Calender\style\kamadatepicker.css" />
+    <Content Include="Areas\Admin\Content\Percian-Calender\style\kamadatepicker.min.css" />
     <Content Include="Areas\Admin\Content\TagInput\bootstrap-tagsinput.css" />
     <Content Include="Areas\Admin\Content\TagInput\bootstrap-tagsinput.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -156,6 +163,9 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\owl.carousel.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\CustomeCss\Custome.css" />
+    <Content Include="Content\CustomJs\Custom.js" />
+    <Content Include="Content\CustomJs\smooth-scroll.js" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\yekannumbers.svg" />
     <Content Include="Content\fonts\yekanweb.svg" />
@@ -170,6 +180,7 @@
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\carousel.js" />
     <Content Include="Content\js\jquery-v1.11.3.js" />
+    <Content Include="Content\js\kendo.all.min.js" />
     <Content Include="Content\js\modernizr.js" />
     <Content Include="Content\js\owl.carousel.js" />
     <Content Include="Content\js\script.js" />
@@ -1419,6 +1430,11 @@
     <Content Include="Areas\Admin\Views\ManageProducts\EditFeature.cshtml" />
     <Content Include="Areas\Admin\Views\ManageProducts\CreateProductFeature.cshtml" />
     <Content Include="Areas\Admin\Views\ManageProducts\EditProductFeature.cshtml" />
+    <Content Include="Areas\Admin\Content\Percian-Calender\LICENSE" />
+    <Content Include="Areas\Admin\Content\Percian-Calender\package.json" />
+    <Content Include="Areas\Admin\Content\Percian-Calender\README.md" />
+    <Content Include="Areas\Admin\Views\ManageProducts\ShowProducts.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageProducts\FilterProducts.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Images\DefaultImages\UserAvatarDefault.jpg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1523,6 +1539,8 @@
     <Content Include="Views\Products\ShowProduct.cshtml" />
     <Content Include="Views\Products\ShowComments.cshtml" />
     <Content Include="Views\Products\CreateComment.cshtml" />
+    <Content Include="Views\Products\ShowProducts.cshtml" />
+    <Content Include="Views\Products\ArchiveProducts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

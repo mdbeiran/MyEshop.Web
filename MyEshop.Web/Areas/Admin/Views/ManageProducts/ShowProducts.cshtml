@@ -1,0 +1,50 @@
+﻿@model MyEshop.DomainClass.Product
+
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => modelItem.ProductCode)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => modelItem.ProductTitle)
+    </td>
+    <td>
+        @*@if (item.ProductSelectedGroups.Any())
+            {
+                <ul>
+                    @foreach (var group in item.ProductSelectedGroups)
+                    {
+                        <li>@group.ProductGroup.GroupTitle</li>
+                    }
+                </ul>
+            }*@
+    </td>
+    <td>
+        @((Model.IsExist) ? "موجود" : "ناموجود")
+    </td>
+    <td>
+        @((Model.IsActive) ? "فعال" : "غیر فعال")
+    </td>
+    <td>
+        <a href="@Url.Action("CreateProductFeature","ManageProducts", new { area="Admin", id=Model.ProductId})" class="btn btn-default">ویژگی های محصول</a>
+        <a href="@Url.Action("CreateProductGallery","ManageProducts", new { area="Admin", id=Model.ProductId})" class="btn btn-primary">گالری محصول</a>
+        <a href="@Url.Action("EditProduct","ManageProducts", new { area="Admin", id=Model.ProductId})" class="btn btn-warning">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        @if (!Model.IsDelete)
+        {
+            <a data-remodal-target="modal" class="btn btn-danger" onclick="DeleteProduct(@Model.ProductId)">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+        }
+        else
+        {
+            <a data-remodal-target="modal" class="btn btn-success" onclick="ReturnProduct(@Model.ProductId)">
+                <i class="glyphicon glyphicon-repeat"></i>
+            </a>
+        }
+    </td>
+</tr>
+
+
+
+
