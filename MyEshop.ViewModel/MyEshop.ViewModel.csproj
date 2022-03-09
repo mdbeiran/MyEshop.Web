@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Products\CreateProductViewModel.cs" />
     <Compile Include="Products\EditProductViewModel.cs" />
+    <Compile Include="Products\FilterProductsByArchiveProductViewModel.cs" />
     <Compile Include="Products\FilterProductsViewModel.cs" />
     <Compile Include="Products\ProductGroupViewModel.cs" />
     <Compile Include="Products\ShowProductFeatureViewModel.cs" />

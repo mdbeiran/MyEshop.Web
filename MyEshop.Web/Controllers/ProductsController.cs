@@ -13,6 +13,7 @@ namespace MyEshop.Web.Controllers
     using MoreLinq;
     using MyEshop.ViewModel.Products;
     using MyEshop.Business;
+    using MyEshop.DataLayer;
 
     public class ProductsController : Controller
     {
@@ -20,19 +21,20 @@ namespace MyEshop.Web.Controllers
         #region Ctor
 
         private MyEshopUOW _db;
+        MyEshopDbContext context = new MyEshopDbContext();
         public ProductsController(MyEshopUOW db)
         {
             _db = db;
         }
 
         #endregion
-
+        
         #region Products Category
 
-        // id = null
-        public ActionResult ProductsCategory(int? id)
+        // ParentId = null
+        public ActionResult ProductsCategory(int? parentId)
         {
-            IEnumerable<ProductGroup> mainGroup = _db.ProductRepository.GetGroups(id).ToList();
+            IEnumerable<ProductGroup> mainGroup = _db.ProductRepository.GetGroups(parentId).ToList();
 
             return PartialView(mainGroup);
         }
@@ -91,7 +93,7 @@ namespace MyEshop.Web.Controllers
         #endregion
 
         #region Create Comment
-        
+
         // id = productId
         public ActionResult CreateComment(int id)
         {
@@ -99,12 +101,12 @@ namespace MyEshop.Web.Controllers
             {
                 ProductId = id
             };
-            
+
 
             return PartialView(productComment);
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateComment(ProductComment productComment)
@@ -136,7 +138,7 @@ namespace MyEshop.Web.Controllers
                 var filteredProductsByTag = _db.ProductRepository.GetProductsByTagTitle(searchQuery).ToList();
                 filteredProducts.AddRange(filteredProductsByTag);
 
-                ViewBag.SearchQuery = searchQuery;  
+                ViewBag.SearchQuery = searchQuery;
                 return View(filteredProducts.Distinct());
             }
 
@@ -150,12 +152,11 @@ namespace MyEshop.Web.Controllers
         #region Products Archive
 
         [Route("Archive")]
-        public ActionResult ArchiveProducts()
+        public ActionResult ArchiveProducts(FilterProductsByArchiveProductViewModel filter)
         {
-            IEnumerable<Product> products = _db.ProductRepository.GetProducts().ToList();
-            ViewBag.ProductGroups = _db.ProductRepository.GetActiveGroups().ToList();
+            FilterProductsByArchiveProductViewModel filterProducts = _db.ProductRepository.GetArchiveProductsByFilter(filter);
 
-            return View(products);
+            return View(filterProducts);
         }
 
         #endregion

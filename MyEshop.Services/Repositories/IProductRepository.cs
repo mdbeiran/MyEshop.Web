@@ -39,6 +39,8 @@ namespace MyEshop.Services
         IEnumerable<Product> LastProducts();
         IEnumerable<Product> GetFilteredProducts(string searchQuery);
         FilterProductsViewModel GetProductsByFilter(FilterProductsViewModel filter);
+        IEnumerable<Product> GetProductsByTitle(string productTitle);
+        FilterProductsByArchiveProductViewModel GetArchiveProductsByFilter(FilterProductsByArchiveProductViewModel filter);
 
         #endregion
 

@@ -1,3 +1,7 @@
 ﻿.filter input[type=text]{
     width:100% !important;
 }
+
+.filter ul .subGroup{
+    padding:5px;
+}

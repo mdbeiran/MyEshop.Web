@@ -251,6 +251,106 @@ namespace MyEshop.Services
             return data;
         }
 
+        public IEnumerable<Product> GetProductsByTitle(string productTitle)
+        {
+            return _context.Products.Where(p => p.ProductTitle.Trim().ToLower().Contains(productTitle.Trim().ToLower()));
+        }
+
+        public FilterProductsByArchiveProductViewModel GetArchiveProductsByFilter(FilterProductsByArchiveProductViewModel filter)
+        {
+            int take = filter.Take;
+            int skip = (filter.PageId - 1) * take;
+
+            FilterProductsByArchiveProductViewModel data = new FilterProductsByArchiveProductViewModel();
+            //List<Product> query = _context.Products.Where(p => p.IsActive && !p.IsDelete).ToList();
+            List<Product> query = new List<Product>();
+
+            #region State
+
+            switch (filter.Sort)
+            {
+                case "allProduct":
+                    {
+                        break;
+                    }
+                case "PriceLowToHigh":
+                    {
+                        //query = query.Where(p => p.IsActive && p.IsDelete == false);
+                        break;
+                    }
+                case "PriceHighToLow":
+                    {
+                        //query = query.Where(p => p.IsActive == false && p.IsDelete == false);
+                        break;
+                    }
+            }
+
+            #endregion
+
+            #region Impelementing Filters
+
+            if (filter.SelectedGroups != null)
+            {
+                foreach (int groupId in filter.SelectedGroups)
+                {
+                    query.AddRange(_context.ProductSelectedGroups.Where(p => p.ProductGroupId == groupId).Select(p => p.Product));
+                    //products.AddRange(context.ProductSelectedGroups.Where(p => p.ProductGroupId == groupId).Select(p => p.Product));
+                }
+                query = query.Where(p => p.IsActive && !p.IsDelete).Distinct().ToList();
+            }
+            else
+            {
+                query = _context.Products.Where(p => p.IsActive && !p.IsDelete).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(filter.ProductTitle))
+            {
+                query = query.Where(p => p.ProductTitle.Trim().ToLower().Contains(filter.ProductTitle.Trim().ToLower())).ToList();
+                data.ProductTitle = filter.ProductTitle;
+            }
+
+            if (filter.MinPrice != 0 && filter.MinPrice != null)
+            {
+                query = query.Where(p => p.Price >= filter.MinPrice).ToList();
+                data.MinPrice = filter.MinPrice;
+            }
+
+            if (filter.MaxPrice != 0 && filter.MaxPrice != null)
+            {
+                query = query.Where(p => p.Price <= filter.MaxPrice).ToList();
+                data.MaxPrice = filter.MaxPrice;
+            }
+
+            #endregion
+
+            #region Pagging
+
+            int thisPageCount = query.Count();
+            if (thisPageCount % take > 0)
+            {
+                data.PageCount = (thisPageCount / take) + 1;
+            }
+            else
+            {
+                data.PageCount = thisPageCount / take;
+            }
+
+            data.ActivePage = filter.PageId;
+            data.StartPage = filter.PageId - 3;
+            data.EndPage = data.ActivePage + 3;
+            if (data.StartPage <= 0) data.StartPage = 1;
+            if (data.EndPage > data.PageCount) data.EndPage = data.PageCount;
+
+            #endregion
+
+            data.Sort = filter.Sort;
+            data.Products = query.OrderByDescending(p => p.CreateDate).Skip(skip).Take(take).ToList();
+            data.ProductGroups = _context.ProductGroups.Where(g => !g.IsDelete).ToList();
+            data.SelectedGroups = filter.SelectedGroups;
+
+            return data;
+        }
+
         #endregion
 
         #region Product Brands
@@ -453,6 +553,8 @@ namespace MyEshop.Services
         {
             _context.Dispose();
         }
+
+
 
 
 

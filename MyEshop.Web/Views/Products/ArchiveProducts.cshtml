@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyEshop.DomainClass.Product>
+﻿@model MyEshop.ViewModel.Products.FilterProductsByArchiveProductViewModel
 @using MyEshop.DomainClass
 
 @{
@@ -7,40 +7,42 @@
 }
 
 @section Filters{
-    <section class="border-radius basket-side">
+    <section class="border-radius">
         <header><h3> فیلتر محصولات  </h3></header>
         <article class="filter">
-            <form>
+            <form action="/Archive" method="get" id="filter-Products">
+                <input hidden name="@nameof(Model.PageId)" id="pageId" value="@Model.PageId" />
+
                 <p>عنوان محصول</p>
                 <p>
-                    <input type="text" name="productTitle" class="form-control" />
+                    <input type="text" name="@nameof(Model.ProductTitle)" value="@Model.ProductTitle" class="form-control" />
                 </p>
                 <p>حداقل قیمت</p>
                 <p>
-                    <input type="number" name="minPrice" class="form-control" />
+                    <input type="number" value="@Model.MinPrice" name="@nameof(Model.MinPrice)" class="form-control" />
                 </p>
                 <p>حداکثر قیمت</p>
                 <p>
-                    <input type="number" name="maxPrice" class="form-control" />
+                    <input type="number" value="@Model.MaxPrice" name="@nameof(Model.MaxPrice)" class="form-control" />
                 </p>
                 <p>گروه ها</p>
                 <p>
                     @{
-                        var Groups = ViewBag.ProductGroups as IEnumerable<ProductGroup>;
+                        List<int?> selectedGroups = Model.SelectedGroups ?? new List<int?>();
                     }
-                    <ul>
-                        @foreach (var mainGroup in Groups.Where(g => g.ParentID == null))
+                    <ul class="mainGroup">
+                        @foreach (var mainGroup in Model.ProductGroups.Where(g => g.ParentID == null))
                         {
                             <li>
-                                <input type="checkbox" name="selectedGroups" value="@mainGroup.GroupID" />
+                                <input type="checkbox" name="@nameof(Model.SelectedGroups)" @((selectedGroups.Any(g => g == mainGroup.GroupID)) ? "checked" : "") value="@mainGroup.GroupID" />
                                 <span>@mainGroup.GroupTitle</span>
-                                @if (Groups.Any(g => g.ParentID == mainGroup.GroupID))
+                                @if (Model.ProductGroups.Any(g => g.ParentID == mainGroup.GroupID))
                                 {
-                                    <ul>
-                                        @foreach (var subGroup in Groups.Where(g => g.ParentID == mainGroup.GroupID))
+                                    <ul class="subGroup">
+                                        @foreach (var subGroup in Model.ProductGroups.Where(g => g.ParentID == mainGroup.GroupID))
                                         {
                                             <li>
-                                                <input type="checkbox" name="selectedGroups" value="@subGroup.GroupID" />
+                                                <input type="checkbox" name="@nameof(Model.SelectedGroups)" @((selectedGroups.Any(sg => sg == subGroup.GroupID)) ? "checked" : "" ) value="@subGroup.GroupID" />
                                                 <span>@subGroup.GroupTitle</span>
                                             </li>
                                         }
@@ -51,10 +53,59 @@
                     </ul>
                 </p>
 
-
                 <input type="submit" class="btn btn-success form-control" value="فیلتر" />
             </form>
         </article>
     </section>
 }
 
+<ol class="breadcrumb">
+    <li><a href="/">خانه</a></li>
+    <li><a style="color:blue;" href="#"> آرشیو محصولات </a></li>
+</ol>
+
+<div class="col-md-12 text-left">
+    <select>
+        <option value="allProduct">همه محصولات</option>
+        <option value="PriceLowToHigh">قیمت از کم به زیاد</option>
+        <option value="PriceHighToLow">قیمت از زیاد به کم</option>
+    </select>
+</div>
+
+<section class="last-products archive-products">
+    <article>
+        @foreach (var product in Model.Products)
+        {
+            @Html.Partial("_Product", product)
+        }
+        <div class="clearfix"></div>
+    </article>
+</section>
+
+@if (Model.PageId > 0)
+{
+    <div class="pagination-layer">
+        <ul class="pagination">
+            @*@for (int i = 1; i <= ViewBag.PageCount; i++)
+                {
+                    <li><a onclick="ChangePage(@i)">@i</a></li>
+                }*@
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <li class="@((i == Model.ActivePage) ? "active" : "")">
+                    <a style="cursor:pointer;" onclick="FillPageId(@i)"> @i</a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+@section Scripts{
+    <script>
+        // رفتن به صفحه بعد
+        function FillPageId(id) {
+            $("#pageId").val(id);
+            $("#filter-Products").submit();
+        }
+    </script>
+}
