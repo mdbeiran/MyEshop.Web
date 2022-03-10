@@ -13,3 +13,9 @@ function SuccessComment() {
 function replyComment(commentId) {
     $("#ParentId").val(commentId);
 }
+
+// رفتن به صفحه بعد
+function FillPageId(id) {
+    $("#pageId").val(id);
+    $("#filter-Products").submit();
+}

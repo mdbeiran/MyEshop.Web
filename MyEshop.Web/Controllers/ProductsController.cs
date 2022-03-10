@@ -161,5 +161,14 @@ namespace MyEshop.Web.Controllers
 
         #endregion
 
+        #region Products Grid
+
+        //public ActionResult ProductsGrid()
+        //{
+        //    return PartialView();
+        //}
+
+        #endregion
+
     }
 }

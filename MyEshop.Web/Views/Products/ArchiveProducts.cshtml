@@ -8,22 +8,23 @@
 
 @section Filters{
     <section class="border-radius">
-        <header><h3> فیلتر محصولات  </h3></header>
+        <header><h3> فیلتر محصولات</h3></header>
         <article class="filter">
-            <form action="/Archive" method="get" id="filter-Products">
+            <form @*action="/Archive" method="get" id="filter-Products"*@>
+
                 <input hidden name="@nameof(Model.PageId)" id="pageId" value="@Model.PageId" />
 
                 <p>عنوان محصول</p>
                 <p>
-                    <input type="text" name="@nameof(Model.ProductTitle)" value="@Model.ProductTitle" class="form-control" />
+                    <input type="text" id="ProductTitle" name="@nameof(Model.ProductTitle)" value="@Model.ProductTitle" class="form-control" />
                 </p>
                 <p>حداقل قیمت</p>
                 <p>
-                    <input type="number" value="@Model.MinPrice" name="@nameof(Model.MinPrice)" class="form-control" />
+                    <input type="number" id="MinPrice" value="@Model.MinPrice" name="@nameof(Model.MinPrice)" class="form-control" />
                 </p>
                 <p>حداکثر قیمت</p>
                 <p>
-                    <input type="number" value="@Model.MaxPrice" name="@nameof(Model.MaxPrice)" class="form-control" />
+                    <input type="number" id="MaxPrice" value="@Model.MaxPrice" name="@nameof(Model.MaxPrice)" class="form-control" />
                 </p>
                 <p>گروه ها</p>
                 <p>
@@ -34,7 +35,7 @@
                         @foreach (var mainGroup in Model.ProductGroups.Where(g => g.ParentID == null))
                         {
                             <li>
-                                <input type="checkbox" name="@nameof(Model.SelectedGroups)" @((selectedGroups.Any(g => g == mainGroup.GroupID)) ? "checked" : "") value="@mainGroup.GroupID" />
+                                <input type="checkbox" id="MainGroupId" name="@nameof(Model.SelectedGroups)" @((selectedGroups.Any(g => g == mainGroup.GroupID)) ? "checked" : "") value="@mainGroup.GroupID" />
                                 <span>@mainGroup.GroupTitle</span>
                                 @if (Model.ProductGroups.Any(g => g.ParentID == mainGroup.GroupID))
                                 {
@@ -42,7 +43,7 @@
                                         @foreach (var subGroup in Model.ProductGroups.Where(g => g.ParentID == mainGroup.GroupID))
                                         {
                                             <li>
-                                                <input type="checkbox" name="@nameof(Model.SelectedGroups)" @((selectedGroups.Any(sg => sg == subGroup.GroupID)) ? "checked" : "" ) value="@subGroup.GroupID" />
+                                                <input type="checkbox" id="SubGroupId" name="@nameof(Model.SelectedGroups)" @((selectedGroups.Any(sg => sg == subGroup.GroupID)) ? "checked" : "" ) value="@subGroup.GroupID" />
                                                 <span>@subGroup.GroupTitle</span>
                                             </li>
                                         }
@@ -53,7 +54,7 @@
                     </ul>
                 </p>
 
-                <input type="submit" class="btn btn-success form-control" value="فیلتر" />
+                <input @*onclick="FilterProducts()"*@ type="submit" class="btn btn-success form-control" value="فیلتر" />
             </form>
         </article>
     </section>
@@ -78,6 +79,8 @@
         {
             @Html.Partial("_Product", product)
         }
+
+        @*<div id="ProductsGrid"></div>*@
         <div class="clearfix"></div>
     </article>
 </section>
@@ -86,10 +89,6 @@
 {
     <div class="pagination-layer">
         <ul class="pagination">
-            @*@for (int i = 1; i <= ViewBag.PageCount; i++)
-                {
-                    <li><a onclick="ChangePage(@i)">@i</a></li>
-                }*@
             @for (int i = 1; i <= Model.PageCount; i++)
             {
                 <li class="@((i == Model.ActivePage) ? "active" : "")">
@@ -102,10 +101,45 @@
 
 @section Scripts{
     <script>
-        // رفتن به صفحه بعد
-        function FillPageId(id) {
-            $("#pageId").val(id);
-            $("#filter-Products").submit();
+        function FilterProducts() {
+            debugger;
+            var pageId = $("#pageId").val();
+            var productTitle = $("#ProductTitle").val();
+            var minPrice = $("#MinPrice").val();
+            var maxPrice = $("#MaxPrice").val();
+            var SelectedGroups = [];
+
+            $("input[name='SelectedGroups']").map(function () {
+                if ($(this).prop("checked") === true) {
+                    SelectedGroups.push(parseInt($(this).val()));
+                }
+            });
+
+            debugger;
+
+            var filter = {
+                pageId: pageId,
+                productTitle: productTitle,
+                minPrice: minPrice,
+                maxPrice: maxPrice,
+                SelectedGroups: SelectedGroups.join('-')
+            }
+            debugger;
+            $.ajax({
+                type: 'GET',
+                url: '/Prodcuts/ArchiveProducts',
+                data: filter,
+                success: function (data) {
+                    debugger;
+                    console.log(data);
+                    $("#grid").html(data);
+                },
+                error: function (data) {
+                    console.log("error");
+                    console.log(data);
+                }
+            });
         }
     </script>
+    <script src="~/Content/CustomJs/Custom.js"></script>
 }

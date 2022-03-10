@@ -1541,6 +1541,7 @@
     <Content Include="Views\Products\CreateComment.cshtml" />
     <Content Include="Views\Products\ShowProducts.cshtml" />
     <Content Include="Views\Products\ArchiveProducts.cshtml" />
+    <Content Include="Views\Products\ProductsGrid.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
